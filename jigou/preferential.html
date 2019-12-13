@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="preferential">
+        <div class="time-limit">
+                <div class="course">
+                        <div class="redbox"></div>
+                        <div class="font">全部课程</div>
+                </div>
+                <div class="limit-content">
+                    <div class="limit-box">
+                        <img src="../src/assets/蒙版组 2@2x.png" alt="">
+                        <span class="activity-name">限时活动名称限时活动名称</span>
+                        <span class="activity-state">进行中</span>
+                        <div class="activity-time">活动时间：&nbsp;2019年10月10日-2019年10月30日</div>
+                    </div>
+                    <div class="limit-box">
+                            <img src="../src/assets/蒙版组 2@2x.png" alt="">
+                            <span class="activity-name">限时活动名称限时活动名称</span>
+                            <span class="activity-state">进行中</span>
+                            <div class="activity-time">活动时间：&nbsp;2019年10月10日-2019年10月30日</div>
+                    </div>
+                    <div class="limit-box">
+                            <img src="../src/assets/蒙版组 3@2x.png" alt="">
+                            <span class="activity-name">限时活动名称限时活动名称</span>
+                            <span class="activity-state">已过期</span>
+                            <div class="activity-time">活动时间：&nbsp;2019年10月10日-2019年10月30日</div>
+                    </div>
+                    <div class="limit-box">
+                                <img src="../src/assets/蒙版组 3@2x.png" alt="">
+                                <span class="activity-name">限时活动名称限时活动名称</span>
+                                <span class="activity-state">已过期</span>
+                                <div class="activity-time">活动时间：&nbsp;2019年10月10日-2019年10月30日</div>
+                    </div>
+                </div>
+        </div>
+        <div class="coupon-content">
+                <div class="course">
+                        <div class="redbox"></div>
+                        <div class="font">优惠券</div>
+                </div>
+                <div class="allcoupon">
+                        <div class="coupon">
+                                <div class="coupon-price"> <span>200 </span> <span class="unit">元</span> </div>
+                                <p class="coupon-limit">满399元即可使用</p>
+                                <p class="coupon-button">立即领取</p>
+                        </div>
+                        <div class="coupon">
+                                <div class="coupon-price"> <span>200 </span> <span class="unit">元</span> </div>
+                                <p class="coupon-limit">满399元即可使用</p>
+                                <p class="coupon-button">立即领取</p>
+                        </div>
+                        <div class="coupon">
+                                <div class="coupon-price"> <span>200 </span> <span class="unit">元</span> </div>
+                                <p class="coupon-limit">满399元即可使用</p>
+                                <p class="coupon-button">立即领取</p>
+                        </div>
+                </div>
+        </div>
+    </div>
+</body>
+<style>
+    .coupon {
+        width: 240px;
+        height: 120px;
+        background-color: #fff2f2;
+        border: solid 1px #ff7c7c;
+        position: relative;
+        font-size: 16px;
+        text-align: center;
+    }
+    .allcoupon div:not(:first-child){
+        margin-left: 70px;
+    }
+    .coupon-price{
+        font-size: 38px;
+        letter-spacing: 0px;
+        color: #ff7200;
+        margin-top: 10px;
+    }
+    .coupon .unit{
+        font-size: 16px;
+    }
+    .coupon-limit{
+        font-size: 12px;
+        font-weight: normal;
+        font-stretch: normal;
+        letter-spacing: 0px;
+        color: #cccccc;
+    }
+    .coupon-button{
+        width: 144px;
+        height: 28px;
+        background-color: #ff7200;
+        border-radius: 4px;
+        color: #ffffff;
+        line-height: 28px;
+        margin: 2px auto 0;
+    }
+    .limit-box{
+        width: 416px;
+	    height: 320px;
+        background-color: #f6f6f6;
+        margin-bottom: 40px;
+    }
+    .limit-content div:not(:nth-child(2n)){
+        margin-right: 28px;
+    }
+    .limit-box img{
+        height: 266px;
+        width: 416px;
+    }
+    .activity-name{
+        margin: 6px 116px 4px 10px;
+        font-size: 20px;
+        letter-spacing: 0px;
+        color: #666666;
+    }
+    .activity-state{
+
+        background-color: #2ccc5c;
+        border-radius: 4px;
+        font-size: 12px;
+        color: #ffffffff;
+    }
+    .activity-time{
+        width: 256px;
+        height: 16px;
+        font-size: 12px;
+        line-height: 13px;
+        letter-spacing: 0px;
+        color: #999999;
+        margin-left: 10px;
+    }
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        background-color: #f6f6f6;
+    }
+    .preferential{
+        width: 900px;
+    }
+    .limit-content{
+        width: 860px;
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto ;
+    }
+    .allcoupon{
+        width: 860px;
+        text-align: center;
+        display: flex;
+        flex-wrap: nowrap;
+        margin: 0 auto 40px;
+    }
+    .time-limit{
+        width: 900px;
+        height: 780px;
+        background-color: #ffffff;
+        border-radius: 4px;
+        margin: 21px 0 0 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .coupon-content{
+        width: 900px;
+        height: 220px;
+        background-color: #ffffff;
+        border-radius: 4px;
+        margin: 21px 0 0 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .course {
+        /* width: 102px; */
+        height: 27px;
+        font-family: Source Han Sans CN;
+        font-size: 20px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 27px;
+        letter-spacing: 2px;
+        color: #666666;
+        margin: 17px 0 14px 21px;
+        display: flex;
+        float: left;
+    }
+
+    .redbox {
+        width: 4px;
+        height: 19px;
+        background-color: #d12d2c;
+        border-radius: 2px;
+        margin: auto;
+        margin-right: 10px;
+    }
+</style>
+</html>
