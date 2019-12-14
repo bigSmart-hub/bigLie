@@ -235,7 +235,7 @@ export default {
         total: 0,
         current_page: 10
       },
-      currentPage:"1",
+      currentPage: "1",
       listData: [],
       contents: [
         {
@@ -271,6 +271,14 @@ export default {
       }
     };
   },
+  watch: {
+    $route(to, from) {
+      console.log(to.path, from);
+      if (this.$route.params.name) {
+        this.searchListData("1");
+      }
+    }
+  },
   mounted() {
     this.searchListData("1");
   },
@@ -279,12 +287,14 @@ export default {
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      this.searchListData(val)
+      this.searchListData(val);
     },
     searchListData(page) {
       fetch(
         // `/api/index/contents`,
-        `/api/search/courses?keywords=${this.$route.params.key}&page=${page}&page_size=15`,
+        `/api/search/courses?keywords=${
+          this.$route.params.name
+        }&page=${page}&page_size=15`,
 
         {
           // must match 'Content-Type' header

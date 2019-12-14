@@ -79,14 +79,21 @@ export default {
       // this.nowpos = e.target.name;
     },
     efiningCities() {
-      this.$root.bus.$emit("province", this.nowposId);
+      console.log(this.$route.name);
       this.$root.bus.$emit("provinceName", this.nowposObj.name);
+      this.$root.bus.$emit("province",this.nowposId)
       this.changeCity = false;
       if (this.nowposObj.name == "全国站") {
-        this.$router.push("./");
+        this.$router.push({
+          name: "countryHomePage"
+        });
+      } else if (this.$route.name == "educationalServices") {
+        this.$router.push({
+          path: "/educationalServices/" + this.nowposId
+        });
       } else {
         this.$router.push({
-          name: "home"
+          path: "/homePage/" + this.nowposId
         });
       }
     }

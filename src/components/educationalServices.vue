@@ -199,6 +199,14 @@ export default {
       address: []
     };
   },
+  watch: {
+    $route(to, from) {
+      console.log(to.path, from);
+      if (this.$route.params.proId) {
+        this.getProvinceData(this.$route.params.proId);
+      }
+    }
+  },
   methods: {
     toEducationalServices2(item1) {
       this.$router.push({
@@ -212,7 +220,8 @@ export default {
       fetch(`/api/org/org_index`, {
         // must match 'Content-Type' header
         headers: {
-          "content-type": `application/json/province=${id}`
+          "content-type": `application/json${id}`
+          //  "province" :`${id}`
         },
         method: "GET" // *GET, POST, PUT, DELETE, etc.
         // mode: 'cors', // no-cors, cors, *same-origin
@@ -230,8 +239,8 @@ export default {
     }
   },
   mounted() {
-    this.getProvinceData(this.$route.params.id);
-    console.log(this.$route.params.id);
+    this.getProvinceData(this.$route.params.proId);
+    console.log(this.$route.params.proId);
     let that = this;
     this.$root.bus.$on("bol", function(value) {
       that.listBol = value;

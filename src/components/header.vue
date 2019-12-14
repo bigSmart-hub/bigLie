@@ -202,18 +202,21 @@ export default {
       }
     },
     toEducationalServices() {
+      console.log(this.provinceId)
       this.$router.push({
-        name: "educationalServices",
-        params: {
-          id: this.provinceId
-        }
+        path:'/educationalServices/'+this.provinceId
       });
     },
     toHomePage() {
-      if (this.province == "全国站") {
-        this.$router.push("./");
-      } else {
-        this.$router.push("./homePage");
+      console.log(this.$route.name)
+      if(this.$route.name == "countryHomePage" || this.provinceId=="0"){
+        this.$router.push({
+          name:"countryHomePage"
+        });
+      }else{
+        this.$router.push({
+          path:'/homePage/'+this.provinceId
+        });
       }
     },
     listBol() {

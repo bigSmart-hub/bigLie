@@ -95,7 +95,8 @@ export default {
       fetch(`/api/org/org_index`, {
         // must match 'Content-Type' header
         headers: {
-          "content-type": `application/json/province=${id}`
+          "content-type": `application/json`,
+           "province" :`${id}`
         },
         method: "GET" // *GET, POST, PUT, DELETE, etc.
         // mode: 'cors', // no-cors, cors, *same-origin
