@@ -252,7 +252,7 @@ export default {
   margin-top: 2px;
 }
 .text3 {
-  width: 146px;
+  width: 156px;
   height: 40px;
   background-color: #d12d2c;
   border-radius: 6px;
