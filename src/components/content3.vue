@@ -3,20 +3,22 @@
     <div class="titel_img">
       <div class="titel">
         <div></div>
-        <p>{{titelName}}</p>
+        <p>{{currentData.name}}</p>
       </div>
       <div class="img">
         <img src alt />
       </div>
     </div>
     <!-- 选项卡内容 -->
-    <div class="homeContainerContent_content">
+    <div v-if="currentData.children.length" class="homeContainerContent_content">
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane :label="childrenName" name="first">
+        <el-tab-pane :label="currentData.children[0].name" name="first">
           <div id="text">
-            <div v-for="(item,index) in items" :key="index">
-              <img :src="item.logo" alt />
-              <p class="text1">{{item.title}}</p>
+            <div v-for="(item,index) in currentData.children[0].courses" :key="index">
+              <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
+                <img :src="item.logo" alt />
+                <p class="text1">{{item.title}}</p>
+              </a>
             </div>
           </div>
           <!-- 底部内容 -->
@@ -29,11 +31,20 @@
               </div>
               <div>
                 <div>
-                  <p>河南高职高专批开录 特色专科受青睐</p>
-                  <img src alt />
+                  <p>{{currentData.children[0].articles[0].title}}</p>
+                  <a
+                    :href="`http://psp.eol.cn/class/${currentData.children[0].articles[0].old_id}`" target="blank"
+                  >
+                    <img :src="currentData.pc_img" alt />
+                  </a>
                 </div>
                 <div>
-                  <a href v-for="(item,index) in contents" :key="index">{{item.title}}</a>
+                  <a
+                    :href="`http://psp.eol.cn/class/${item.old_id}`"
+                    target="blank"
+                    v-for="(item,index) in currentData.children[0].articles"
+                    :key="index"
+                  >{{item.title}}</a>
                 </div>
               </div>
             </div>
@@ -46,19 +57,24 @@
               <!-- 底部右边轮播图 -->
               <div>
                 <el-carousel :interval="5000" arrow="always">
-                  <el-carousel-item v-for="(item,index) in items2" :key="index">
-                    <img :src="item.src" alt id="samll_img" />
+                  <el-carousel-item
+                    v-for="(item,index) in currentData.children[0].recommend_orgs"
+                    :key="index"
+                  >
+                    <img :src="item.logo" alt id="samll_img" />
                   </el-carousel-item>
                 </el-carousel>
               </div>
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane :label="childrenName1" name="second">
+        <el-tab-pane :label="currentData.children[1].name" name="second">
           <div id="text">
-            <div v-for="(item,index) in items1" :key="index">
-              <img :src="item.logo" alt />
-              <p class="text1">{{item.title}}</p>
+            <div v-for="(item,index) in currentData.children[1].courses" :key="index">
+              <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
+                <img :src="item.logo" alt />
+                <p class="text1">{{item.title}}</p>
+              </a>
             </div>
           </div>
           <!-- 底部内容 -->
@@ -71,11 +87,16 @@
               </div>
               <div>
                 <div>
-                  <p>河南高职高专批开录 特色专科受青睐</p>
-                  <img src alt />
+                  <p>{{aa}}</p>
+                  <img :src="bb" alt />
                 </div>
                 <div>
-                  <a href v-for="(item,index) in contents1" :key="index">{{item.title}}</a>
+                  <a
+                    :href="`http://psp.eol.cn/class/${item.old_id}`"
+                    target="blank"
+                    v-for="(item,index) in currentData.children[1].articles"
+                    :key="index"
+                  >{{item.title}}</a>
                 </div>
               </div>
             </div>
@@ -88,19 +109,24 @@
               <!-- 底部右边轮播图 -->
               <div>
                 <el-carousel :interval="5000" arrow="always">
-                  <el-carousel-item v-for="(item,index) in items2" :key="index">
-                    <img :src="item.src" alt id="samll_img" />
+                  <el-carousel-item
+                    v-for="(item,index) in currentData.children[1].recommend_orgs"
+                    :key="index"
+                  >
+                    <img :src="item.logo" alt id="samll_img" />
                   </el-carousel-item>
                 </el-carousel>
               </div>
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane :label="childrenName2" name="third">
+        <el-tab-pane :label="currentData.children[2].name" name="third">
           <div id="text">
-            <div v-for="(item,index) in items2" :key="index">
-              <img :src="item.logo" alt />
-              <p class="text1">{{item.title}}</p>
+            <div v-for="(item,index) in currentData.children[2].courses" :key="index">
+              <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
+                <img :src="item.logo" alt />
+                <p class="text1">{{item.title}}</p>
+              </a>
             </div>
           </div>
           <!-- 底部内容 -->
@@ -113,11 +139,16 @@
               </div>
               <div>
                 <div>
-                  <p>河南高职高专批开录 特色专科受青睐</p>
-                  <img src alt />
+                  <p>{{aa}}</p>
+                  <img :src="bb" alt />
                 </div>
                 <div>
-                  <a href v-for="(item,index) in contents2" :key="index">{{item.title}}</a>
+                  <a
+                    :href="`http://psp.eol.cn/class/${item.old_id}`"
+                    target="blank"
+                    v-for="(item,index) in currentData.children[2].articles"
+                    :key="index"
+                  >{{item.title}}</a>
                 </div>
               </div>
             </div>
@@ -130,8 +161,11 @@
               <!-- 底部右边轮播图 -->
               <div>
                 <el-carousel :interval="5000" arrow="always">
-                  <el-carousel-item v-for="(item,index) in items2" :key="index">
-                    <img :src="item.src" alt id="samll_img" />
+                  <el-carousel-item
+                    v-for="(item,index) in currentData.children[2].recommend_orgs"
+                    :key="index"
+                  >
+                    <img :src="item.logo" alt id="samll_img" />
                   </el-carousel-item>
                 </el-carousel>
               </div>
@@ -146,53 +180,53 @@
 export default {
   data() {
     return {
-      imgUrl: "",
-      titelName: "",
-      activeName: "first",
-      childrenName: "",
-      childrenName1: "",
-      childrenName2: "",
-      contents: "",
-      contents1: "",
-      contents2: "",
-      items1: "",
-      items: "",
-      items2: ""
+      aa: "",
+      bb: "",
+      currentData: {
+        children: [],
+        name: ""
+      },
+      activeName: "first"
     };
   },
-  created() {
-    fetch(`/api/index/contents`, {
-      // must match 'Content-Type' header
-      headers: {
-        "content-type": "application/json"
-      },
-      method: "GET" // *GET, POST, PUT, DELETE, etc.
-      // mode: 'cors', // no-cors, cors, *same-origin
-    })
-      .then(data => {
-        return data.json();
-      })
-      .then(res => {
-        let arr = [];
-        for (let key in res) {
-          arr.push(res[key]);
-        }
-        this.titelName = arr[3].name;
-        this.childrenName = arr[3].children[0].name;
-        this.childrenName1 = arr[3].children[1].name;
-        this.childrenName2 = arr[3].children[2].name;
-        this.imgUrl = arr[3].pc_img;
-        this.items = arr[3].children[0].courses;
-        this.items1 = arr[3].children[1].courses;
-        this.items2 = arr[3].children[2].courses;
-        this.contents = arr[3].children[0].articles;
-        this.contents1 = arr[3].children[1].articles;
-        this.contents2 = arr[3].children[2].articles;
-      });
+  mounted() {
+    this.$root.bus.$on("content3", this.getCurrentProvince);
   },
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
+    handleClick(node) {
+      fetch(`/api/index/contents/${this.currentData.children[node.index].id}`, {
+        // must match 'Content-Type' header
+        headers: {
+          "content-type": "application/json",
+          province: `${this.$route.params.id}`
+        },
+        method: "GET" // *GET, POST, PUT, DELETE, etc.
+        // mode: 'cors', // no-cors, cors, *same-origin
+      })
+        .then(data => {
+          return data.json();
+        })
+        .then(res => {
+          if (res.articles.length) {
+            this.aa = res.articles[0].title;
+            this.bb = res.articles[0].image;
+          } else {
+            this.aa = "aaaaaa";
+          }
+          console.log(res);
+          this.currentData.children[node.index].recommend_orgs =
+            res.recommend_orgs;
+          this.currentData.children[node.index].articles = res.articles;
+          this.currentData.children[node.index].courses = res.courses;
+          this.$set(
+            this.currentData.children,
+            node.index,
+            this.currentData.children[node.index]
+          );
+        });
+    },
+    getCurrentProvince(data) {
+      this.currentData = data;
     }
   }
 };

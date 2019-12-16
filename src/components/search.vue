@@ -41,20 +41,16 @@ export default {
 
   methods: {
     toSearchList() {
+      console.log(this.$route.name);
+      console.log(this.searchKey)
       // this.$router.push("./searchList"); //跳转到指定组件
       if (this.currentSearch == "1") {
         this.$router.push({
-          name: "searchlist",
-          params: {
-            key: this.searchKey
-          }
-        });
+            path:'/searchList/'+this.searchKey
+          });
       }else if(this.currentSearch == "2"){
         this.$router.push({
-          name: "educationalServices2",
-          params: {
-            key: this.searchKey
-          }
+          path:'/educationalServices2/'+this.searchKey
         });
       }
     },

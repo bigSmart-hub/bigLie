@@ -7,19 +7,19 @@
             <div class="footer-CustomerService-item border-none">
               <h5>机构入驻认证</h5>
               <p>
-                <a href="/servericePage5">机构服务中心</a>
+                <a href="http://psp.eol.cn/servericePage5" target="blank">机构服务中心</a>
               </p>
               <p>
-                <a href="/servericePage1">省级合作发展中心</a>
+                <a href="http://psp.eol.cn/servericePage1" target="blank">省级合作发展中心</a>
               </p>
               <p>
-                <a href="/index/organization/organindex">教育机构</a>
+                <a href="http://psp.eol.cn/index/organization/organindex" target="blank">教育机构</a>
               </p>
               <p>
-                <a href="/servericePage2">服务工具</a>
+                <a href="http://psp.eol.cn/servericePage2" target="blank">服务工具</a>
               </p>
               <p>
-                <a href="/servericePage3">成功案例</a>
+                <a href="/http://psp.eol.cn/servericePage3" target="blank">成功案例</a>
               </p>
             </div>
           </div>
@@ -27,19 +27,19 @@
             <div class="footer-CustomerService-item">
               <h5>学习服务中心</h5>
               <p>
-                <a href="/study_center/384">如何注册用户</a>
+                <a href="http://psp.eol.cn/study_center/384" target="blank">如何注册用户</a>
               </p>
               <p>
-                <a href="/study_center/385">判断机构资质</a>
+                <a href="http://psp.eol.cn/study_center/385" target="blank">判断机构资质</a>
               </p>
               <p>
-                <a href="/study_center/390">如何在线报名</a>
+                <a href="http://psp.eol.cn/study_center/390" target="blank">如何在线报名</a>
               </p>
               <p>
-                <a href="/study_center/393">评价与反馈</a>
+                <a href="http://psp.eol.cn/study_center/393" target="blank">评价与反馈</a>
               </p>
               <p>
-                <a href="/study_center/384">常见问题</a>
+                <a href="http://psp.eol.cn/study_center/384" target="blank">常见问题</a>
               </p>
             </div>
           </div>
@@ -47,13 +47,13 @@
             <div class="footer-CustomerService-item">
               <h5>平台服务</h5>
               <p>
-                <a href="/servericePage5">机构服务中心</a>
+                <a href="http://psp.eol.cn/servericePage5" target="blank">机构服务中心</a>
               </p>
               <p>
-                <a target="_blank" href="/study_center/index">学习服务中心</a>
+                <a target="_blank" href="http://psp.eol.cn/servericePage5">学习服务中心</a>
               </p>
               <p>
-                <a href="#">院校服务中心</a>
+                <a href="http://psp.eol.cn/study_center/index#" target="blank">院校服务中心</a>
               </p>
             </div>
           </div>
@@ -61,19 +61,19 @@
             <div class="footer-CustomerService-item">
               <h5>关于我们</h5>
               <p>
-                <a href="/edu/p/about_intro">关于中国教育在线</a>
+                <a href="http://psp.eol.cn/edu/p/about_intro" target="blank">关于中国教育在线</a>
               </p>
               <p>
-                <a href="/edu/p/about_cepsp">关于CEPSP</a>
+                <a href="http://psp.eol.cn/study_center/index" target="blank">关于CEPSP</a>
               </p>
               <p>
-                <a href="/edu/p/about_join">加入我们</a>
+                <a href="http://psp.eol.cn/edu/p/about_join" target="blank">加入我们</a>
               </p>
               <p>
-                <a href="/edu/p/about_customer">客服中心</a>
+                <a href="http://psp.eol.cn/edu/p/about_customer" target="blank">客服中心</a>
               </p>
               <p>
-                <a href="/edu/p/about_compony">指导单位与合作伙伴</a>
+                <a href="http://psp.eol.cn/edu/p/about_compony" target="blank">指导单位与合作伙伴</a>
               </p>
             </div>
           </div>
@@ -81,16 +81,16 @@
             <div class="footer-CustomerService-item">
               <h5>服务与保障</h5>
               <p>
-                <a href="/edu/p/falvshengming">法律声明</a>
+                <a href="http://psp.eol.cn/edu/p/falvshengming" target="blank">法律声明</a>
               </p>
               <p>
-                <a href="/edu/p/yinsixieyi">隐私权协议</a>
+                <a href="http://psp.eol.cn/edu/p/yinsixieyi" target="blank">隐私权协议</a>
               </p>
               <p>
-                <a href="/edu/p/fuwuxieyi">服务协议</a>
+                <a href="http://psp.eol.cn/edu/p/fuwuxieyi" target="blank">服务协议</a>
               </p>
               <p>
-                <a href="/edu/p/chengnuo">承诺和服务</a>
+                <a href="http://psp.eol.cn/edu/p/chengnuo" target="blank">承诺和服务</a>
               </p>
             </div>
           </div>

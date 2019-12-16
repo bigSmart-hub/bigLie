@@ -11,13 +11,13 @@ import countryHomePage from "./components/countryHomePage.vue";
 Vue.use(Router)
 
 export default new Router({
-    mode:'history',
+    // mode:'history',
     routes: [
-        { path: '/homePage', name: 'home', component: HomePage },
-        { path: '/searchList', name: 'searchlist', component: searchList },
+        { path: '/homePage/:id', name: 'home', component: HomePage },
+        { path: '/searchList/:name', name: 'searchlist', component: searchList },
         { path: '/searchList2', name: 'searchlist2', component: searchList2 },
-        { path: '/educationalServices', name: 'educationalServices', component: educationalServices },
-        { path: '/educationalServices2', name: 'educationalServices2', component: educationalServices2 },
+        { path: '/educationalServices/:proId', name: 'educationalServices', component: educationalServices },
+        { path: '/educationalServices2/:name', name: 'educationalServices2', component: educationalServices2 },
         { path: '/', name: 'countryHomePage', component: countryHomePage },
     ]
 })

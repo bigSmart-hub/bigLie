@@ -4,60 +4,27 @@
     <div id="home_container_top">
       <!-- 左边列表 -->
       <div class="container_left">
-        <ul>
-          <li>成人学历</li>
-          <li>自考考试</li>
-          <li>成人高考</li>
-          <li class="erji_father" >
-            <!-- <ul class="erji_right">
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-            </ul> -->
+        <ul v-for="(item,index) in listData" :key="index">
+          <a :href="`http://psp.eol.cn/education/classes?id=${item.old_id}`" target="blank">{{item.name}}</a>
+          <li v-for="(item1,index) in item.children.slice(0,2)" :key="index">
+            <a :href="`http://psp.eol.cn/education/classes?id=${item1.old_id}`" target="blank">
+              {{item1.name}}
+            </a>
           </li>
-        </ul>
-        <ul>
-          <li>资格考试</li>
-          <li>公职考</li>
-          <li>从业资格</li>
-          <li></li>
-        </ul>
-        <ul>
-          <li>社会培训</li>
-          <li>企业大学</li>
-          <li>社区教育</li>
-          <li></li>
-        </ul>
-        <ul>
-          <li>国际教育</li>
-          <li>考察交流</li>
-          <li>中文国际</li>
-          <li></li>
-        </ul>
-        <ul>
-          <li>职业教育</li>
-          <li>职业大学</li>
-          <li>1+x</li>
-          <li></li>
-        </ul>
-        <ul>
-          <li>语言培训</li>
-          <li>留学考试</li>
-          <li>应用培训</li>
-          <li></li>
-        </ul>
-        <ul>
-          <li>院校培训</li>
-          <li>院校联盟</li>
-          <li>教师培训</li>
-          <li></li>
-        </ul>
-        <ul id="list_last">
-          <li>素质教育</li>
-          <li>人文</li>
-          <li>科技</li>
-          <li>艺术</li>
-          <li></li>
+          <ul class="erji_right">
+            <li v-for="(item1,index) in item.children" :key="index">
+              <ul style="color:black" class="yingcang">
+                <a :href="`http://psp.eol.cn/education/classes?id=${item1.old_id}`" target="blank">
+                {{item1.name}}
+                </a>
+                <li v-for="(item2,index) in item1.children" :key="index">
+                  <a :href="`http://psp.eol.cn/education/classes?id=${item2.old_id}`" target="blank">
+                  {{item2.name}}
+                  </a>
+                  </li>
+              </ul>
+            </li>
+          </ul>
         </ul>
       </div>
       <!-- 中间轮播图部分 -->
@@ -66,7 +33,6 @@
           <el-carousel-item v-for="(item,index) in items" :key="index">
             <a href="#">
               <img :src="item.src" alt />
-              <p>{{item.src}}</p>
             </a>
           </el-carousel-item>
         </el-carousel>
@@ -81,8 +47,12 @@
               <p>欢迎登陆</p>
               <p>EOL公共服务平台</p>
               <div class="login">
-                <button type="submit" class="btn1" @click="Login(login)">注册</button>
-                <button type="submit" class="btn2" @click="Register(register)">登陆</button>
+                <a href="http://psp.eol.cn/index/user/register.html">
+                  <button type="submit" class="btn1" @click="Login(login)">注册</button>
+                </a>
+                <a href="http://psp.eol.cn/index/user/login.html">
+                  <button type="submit" class="btn2" @click="Register(register)">登陆</button>
+                </a>
               </div>
             </div>
           </div>
@@ -103,15 +73,36 @@
 export default {
   data() {
     return {
+      listData: "",
       register: false,
       login: false,
       items: [
-        { src: require("@/assets/f665d2e1f8154d9be5e4d72e6dbb1a3c.svg") },
-        { src: require("@/assets/f665d2e1f8154d9be5e4d72e6dbb1a3c.svg") },
-        { src: require("@/assets/f665d2e1f8154d9be5e4d72e6dbb1a3c.svg") },
-        { src: require("@/assets/f665d2e1f8154d9be5e4d72e6dbb1a3c.svg") }
+        { src: require("@/assets/未标题-2.svg") },
+        { src: require("@/assets/未标题-2.svg") },
+        { src: require("@/assets/未标题-2.svg") },
+        { src: require("@/assets/未标题-2.svg") }
       ]
     };
+  },
+  mounted() {
+    fetch(`/api/category`, {
+      headers: {
+        "content-type": "application/json"
+      },
+      method: "GET"
+    })
+      .then(data => {
+        return data.json();
+      })
+      .then(res => {
+        let arr2 = [];
+        for (let key in res) {
+          arr2.push(res[key]);
+        }
+        this.listData = arr2;
+        console.log(arr2);
+        console.log(this.listData[0].children);
+      });
   },
   methods: {
     Register() {
@@ -136,6 +127,50 @@ export default {
   .el-tabs__item.is-active {
   background-color: #ffffff;
   color: #d12d2c;
+}
+#home_container_top .container_left > ul{
+  position: relative;
+}
+#home_container_top .container_left > ul>ul{
+  position: absolute;
+  top: -40px
+}
+#home_container_top .container_left > ul:nth-child(2)>ul{
+  position: absolute;
+  top: -82px
+}
+#home_container_top .container_left > ul:nth-child(3)>ul{
+  position: absolute;
+  top: -124px
+}
+#home_container_top .container_left > ul:nth-child(4)>ul{
+  position: absolute;
+  top: -166px
+}
+#home_container_top .container_left > ul:nth-child(5)>ul{
+  position: absolute;
+  top: -208px
+}
+#home_container_top .container_left > ul:nth-child(6)>ul{
+  position: absolute;
+  top: -250px
+}
+#home_container_top .container_left > ul:nth-child(7)>ul{
+  position: absolute;
+  top: -292px
+}
+#home_container_top .container_left > ul:nth-child(8)>ul{
+  position: absolute;
+  top: -334px
+}
+#home_container_top .yingcang {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 15px 15px;
+}
+#home_container_top .yingcang > li {
+  font-size: 12px;
+  margin: 10px 10px;
 }
 #home_container_top .el-tabs--border-card {
   border: none;
@@ -219,25 +254,11 @@ export default {
 }
 #home_container_top li {
   list-style: none;
-  width: 64px;
 }
 #home_container_top .el-carousel__button {
   margin: 0 auto;
 }
-#home_container_top .container_left > ul:not(:nth-child(8)) > li:nth-child(4) {
-  background-image: url("../assets/小箭头.svg");
-  width: 8px;
-  height: 14px;
-  margin-top: 5px;
-}
-#home_container_top .container_left > ul > li:nth-child(1) {
-  font-size: 16px;
-  letter-spacing: 0px;
-  color: #666666;
-}
-#home_container_top .container_left > ul > li:not(:nth-child(1)) {
-  margin-top: 2px;
-}
+
 #home_container_top .container_left > ul {
   display: flex;
   width: 248px;
@@ -246,22 +267,29 @@ export default {
   margin: 0 auto;
   padding: 10px 25px;
 }
+#home_container_top .container_left > ul>a{
+  color: black
+}
+#home_container_top .container_left > ul li>a{
+  color: black
+}
 #home_container_top .erji_father {
   position: relative;
 }
 #home_container_top .erji_right {
   width: 672px;
   height: 380px;
-  background-color: red;
+  background-color: black;
   position: absolute;
-  left: 33px;
-  top: -55px;
+  left: 297px;
+  top: 272px;
+  opacity: 1;
   display: none;
 }
-#home_container_top .container_left > ul:hover {
+#home_container_top .container_left > ul:hover  {
   background-color: #d12d2c;
 }
-#home_container_top .container_left > ul:hover li {
+#home_container_top .container_left > ul:hover li a{
   color: #fefefe;
 }
 #home_container_top .container_left > ul:hover .erji_right {
@@ -309,6 +337,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  z-index: -22;
 }
 #home_container_top .container_right {
   display: flex;

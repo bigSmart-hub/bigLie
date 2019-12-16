@@ -13,9 +13,7 @@
           <li>
             <el-form ref="form" :model="sizeForm" size="mini">
               <el-form-item label>
-                <el-select v-model="sizeForm.region" placeholder="请选择活动区域">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
+                <el-select v-model="sizeForm.region" placeholder="请选择">
                 </el-select>
               </el-form-item>
             </el-form>
@@ -26,9 +24,7 @@
           <li>
             <el-form ref="form" :model="sizeForm" size="mini">
               <el-form-item label>
-                <el-select v-model="sizeForm.region" placeholder="请选择活动区域">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
+                <el-select v-model="sizeForm.region" placeholder="请选择">
                 </el-select>
               </el-form-item>
             </el-form>
@@ -39,9 +35,7 @@
           <li>
             <el-form ref="form" :model="sizeForm" size="mini">
               <el-form-item label>
-                <el-select v-model="sizeForm.region" placeholder="请选择活动区域">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
+                <el-select v-model="sizeForm.region" placeholder="请选择">
                 </el-select>
               </el-form-item>
             </el-form>
@@ -115,7 +109,7 @@
           <div v-for="(item,index) in allData.data" :key="index">
             <a href>
               <div class="searchList_left_content_img">
-                <img :src="'http://118.24.43.196:9999'+item.logo" alt />
+                <img :src="item.logo" alt />
               </div>
               <div>
                 <div class="zhuanye">{{item.title}}</div>
@@ -235,7 +229,7 @@ export default {
         total: 0,
         current_page: 10
       },
-      currentPage:"1",
+      currentPage: "1",
       listData: [],
       contents: [
         {
@@ -271,6 +265,14 @@ export default {
       }
     };
   },
+  watch: {
+    $route(to, from) {
+      console.log(to.path, from);
+      if (this.$route.params.name) {
+        this.searchListData("1");
+      }
+    }
+  },
   mounted() {
     this.searchListData("1");
   },
@@ -279,12 +281,14 @@ export default {
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      this.searchListData(val)
+      this.searchListData(val);
     },
     searchListData(page) {
       fetch(
         // `/api/index/contents`,
-        `/api/search/courses?keywords=${this.$route.params.key}&page=${page}&page_size=15`,
+        `/api/search/courses?keywords=${
+          this.$route.params.name
+        }&page=${page}&page_size=15`,
 
         {
           // must match 'Content-Type' header

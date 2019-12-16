@@ -14,20 +14,22 @@
       </ul>
       <div class="nav_city" v-if="province=='全国站'">
         <p class="nav_city_1">全国站</p>
-        <span class="nav_span" @click="City(city)"><a href="#">[切换]</a></span>
+        <span class="nav_span" @click="City(city)">
+          <a href="#">[切换]</a>
+        </span>
       </div>
       <ul class="right_ul">
         <li>
-          <a href>教育部</a>
+          <a href="http://www.moe.gov.cn/" target="_Blank">教育部</a>
         </li>
         <li>
-          <a href>学信网</a>
+          <a href="https://www.chsi.com.cn/" target="_Blank">学信网</a>
         </li>
         <li>
-          <a href>中国远程与继续教育网</a>
+          <a href="http://www.cdce.cn/" target="_Blank">中国远程与继续教育网</a>
         </li>
         <li>
-          <a href>阳光招生平台</a>
+          <a href="https://gaokao.chsi.com.cn/" target="_Blank">阳光招生平台</a>
         </li>
         <li></li>
         <li>
@@ -37,25 +39,29 @@
           <a href="#" @click="erji">机构入驻</a>
           <ul class="erji" v-if="tan">
             <li>
-              <a href>机构服务</a>
+              <a href="http://psp.eol.cn/servericePage5" target="blank">机构服务</a>
             </li>
             <li>
-              <a href>省级合作</a>
+              <a href="http://psp.eol.cn/servericePage1" target="blank">省级合作</a>
             </li>
             <li>
-              <a href>教育机构</a>
+              <a href="http://psp.eol.cn/servericePage4" target="blank">教育机构</a>
             </li>
             <li>
-              <a href>服务工具</a>
+              <a href="http://psp.eol.cn/servericePage2" target="blank" >服务工具</a>
             </li>
             <li>
-              <a href>成功案例</a>
+              <a href="http://psp.eol.cn/servericePage3" target="blank">成功案例</a>
             </li>
           </ul>
         </li>
         <li @click="erji"></li>
-        <li @click="Register(register)"><a href="#">会员登录</a></li>
-        <li @click="Login(login)"><a href="#">会员注册</a></li>
+        <li @click="Register(register)">
+          <a href="http://psp.eol.cn/index/user/login.html">会员登录</a>
+        </li>
+        <li @click="Login(login)">
+          <a href="http://psp.eol.cn/index/user/register.html">会员注册</a>
+        </li>
       </ul>
     </nav>
     <!-- 头部导航栏分割线 -->
@@ -73,7 +79,9 @@
         </div>
         <div class="line2"></div>
         <div class="city">{{province}}</div>
-        <span @click="City(city)"><a href="#">[切换]</a></span>
+        <span @click="City(city)">
+          <a href="#">[切换]</a>
+        </span>
       </div>
       <!-- logo部分 全国站-->
       <div class="heade_mid_right2" v-else>
@@ -85,8 +93,8 @@
         <div class="line2"></div>
         <div class="logo"></div>
         <div class="text3">
-          <p>服务终身学习</p>
-          <p>推动均衡发展</p>
+          <p>推动教育资源均衡</p>
+          <p>服务全名终生学习</p>
         </div>
       </div>
       <!-- 搜索框部分 -->
@@ -107,7 +115,7 @@
         <a href="#">
           <li @click="toHomePage">首页</li>
         </a>
-        <a href="#">
+        <a href="http://psp.eol.cn/edu/c/news" target="blank">
           <li>教育头条</li>
         </a>
         <a href="#">
@@ -140,7 +148,7 @@ export default {
       tan: false,
       cityaa: 1,
       province: "全国站",
-      provinceId: ""
+      provinceId: "0"
     };
   },
   mounted() {
@@ -202,18 +210,21 @@ export default {
       }
     },
     toEducationalServices() {
+      console.log(this.provinceId);
       this.$router.push({
-        name: "educationalServices",
-        params: {
-          id: this.provinceId
-        }
+        path: "/educationalServices/" + this.provinceId
       });
     },
     toHomePage() {
-      if (this.province == "全国站") {
-        this.$router.push("./");
+      console.log(this.$route.name);
+      if (this.$route.name == "countryHomePage" || this.provinceId == "0") {
+        this.$router.push({
+          name: "countryHomePage"
+        });
       } else {
-        this.$router.push("./homePage");
+        this.$router.push({
+          path: "/homePage/" + this.provinceId
+        });
       }
     },
     listBol() {
@@ -241,7 +252,7 @@ export default {
   margin-top: 2px;
 }
 .text3 {
-  width: 115px;
+  width: 146px;
   height: 40px;
   background-color: #d12d2c;
   border-radius: 6px;
@@ -250,7 +261,7 @@ nav {
   height: 30px;
 }
 .heade_mid_right2 {
-  width: 490px;
+  width: 526px;
   display: flex;
   height: 37px;
   justify-content: space-between;

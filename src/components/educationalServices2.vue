@@ -19,7 +19,7 @@
               :key="index"
               class="region_content"
             >
-              <a href="#">{{item1.rname}}</a>
+              <a href="#">{{item1.name}}</a>
             </li>
           </ul>
         </div>
@@ -87,7 +87,8 @@ export default {
   data() {
     return {
       logos:[],
-      address:[]
+      address:[],
+      currentaddress:""
     };
   },
   methods: {
@@ -95,7 +96,8 @@ export default {
       fetch(`/api/org/org_index`, {
         // must match 'Content-Type' header
         headers: {
-          "content-type": `application/json/province=${id}`
+          "content-type": `application/json`,
+           "province" :`${id}`
         },
         method: "GET" // *GET, POST, PUT, DELETE, etc.
         // mode: 'cors', // no-cors, cors, *same-origin
@@ -108,16 +110,30 @@ export default {
           this.logos = res.org;
           this.news = res.org_articles;
           this.org_new = res.org_new;
-          this.address = res.address;
+          this.currentaddress = res.address;
         });
     },
     changeCurrentData(data){
-      this.getProvinceData(data.rid)
+      this.getProvinceData(data.id)
     }
   },
   mounted() {
     this.getProvinceData(this.$route.params.id)
-    console.log(this.$route.params.id);
+    fetch(`/api/common/areas`, {
+        // must match 'Content-Type' header
+        headers: {
+          "content-type": `application/json`,
+        },
+        method: "GET" // *GET, POST, PUT, DELETE, etc.
+        // mode: 'cors', // no-cors, cors, *same-origin
+      })
+        .then(data => {
+          return data.json();
+        })
+        .then(res => {
+          console.log(res);
+          this.address = res
+        });
   },
 };
 </script>

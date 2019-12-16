@@ -8,21 +8,19 @@
     <div class="homeContainerBottom_mid">
       <div>
         <div v-for="(item,index) in contents" :key="index" id="homeContainerBottom_mid_content">
-          <a href>
+          <a :href='`http://psp.eol.cn/class/${item.old_id}`' target="blank">
             <img :src="item.logo" alt />
             <div>
               <p></p>
               <p></p>
             </div>
-            <p>
-              {{item.title}}
-            </p>
+            <p>{{item.title}}</p>
           </a>
         </div>
       </div>
     </div>
     <div class="homeContainerBottom_bottom">
-      <el-tabs v-model="activeName" @tab-click="handleClick" >
+      <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="指导单位" name="first">
           <div class="countryHomePage7_bottom_text">
             <li v-for="(item3,index) in contents1" :key="index">{{item3.title}}</li>
@@ -47,25 +45,24 @@ export default {
   data() {
     return {
       activeName: "first",
-      contents:'',
-      contents1:'',
-      contents2:'',
-      contents3:'',
+      contents: "",
+      contents1: "",
+      contents2: "",
+      contents3: ""
     };
   },
-  created() {
+  mounted(){
     fetch(`/api/index/favorite`, {
       headers: {
         "content-type": "application/json"
       },
-      method: "GET" 
+      method: "GET"
     })
       .then(data => {
         return data.json();
       })
-      .then(res => {      
-      this.contents=res
-       
+      .then(res => {
+        this.contents = res.slice(1, 7);
       });
     fetch(`/api/index/urls`, {
       // must match 'Content-Type' header
@@ -79,31 +76,29 @@ export default {
         return data.json();
       })
       .then(res => {
-      this.contents1=res  
+        this.contents1 = res;
       });
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
     },
-    qiehuanxihuan(){
-       fetch(`/api/index/favorite`, {
-      // must match 'Content-Type' header
-      headers: {
-        "content-type": "application/json"
-      },
-      method: "GET" // *GET, POST, PUT, DELETE, etc.
-      // mode: 'cors', // no-cors, cors, *same-origin
-    })
-      .then(data => {
-        return data.json();
+    qiehuanxihuan() {
+      fetch(`/api/index/favorite`, {
+        // must match 'Content-Type' header
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "GET" // *GET, POST, PUT, DELETE, etc.
+        // mode: 'cors', // no-cors, cors, *same-origin
       })
-      .then(res => {
-        console.log(res);
-        
-      this.contents=res
-       
-      });
+        .then(data => {
+          return data.json();
+        })
+        .then(res => {
+          this.contents = res.slice(1, 7);
+          console.log(this.contents);
+        });
     }
   }
 };
@@ -164,7 +159,6 @@ export default {
   letter-spacing: 2px;
   color: #666666;
   outline: none;
-  
 }
 #homeContainerBottom .homeContainerBottom_mid {
   display: flex;
@@ -194,23 +188,27 @@ export default {
   font-size: 14px;
   letter-spacing: 1px;
   color: #666666;
+  width: 100px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #homeContainerBottom_mid_content > a > p > span {
-  margin-right: 5px
+  margin-right: 5px;
 }
-#homeContainerBottom .homeContainerBottom_bottom .el-tabs--top{
-    width: 1142px;
-    margin: 0 auto
+#homeContainerBottom .homeContainerBottom_bottom .el-tabs--top {
+  width: 1142px;
+  margin: 0 auto;
 }
-#homeContainerBottom .el-tabs__active-bar{
-    background-color: #d12d2c
+#homeContainerBottom .el-tabs__active-bar {
+  background-color: #d12d2c;
 }
-#homeContainerBottom .el-tabs__item.is-active{
-    color: #d12d2c
+#homeContainerBottom .el-tabs__item.is-active {
+  color: #d12d2c;
 }
-#homeContainerBottom .el-tabs__item{
-    color: #999999;
-	font-size: 16px;
-	letter-spacing: 2px;
+#homeContainerBottom .el-tabs__item {
+  color: #999999;
+  font-size: 16px;
+  letter-spacing: 2px;
 }
 </style>
