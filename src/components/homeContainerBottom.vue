@@ -9,7 +9,7 @@
       <div>
         <div v-for="(item,index) in contents" :key="index" id="homeContainerBottom_mid_content">
           <a :href='`http://psp.eol.cn/class/${item.old_id}`' target="blank">
-            <img :src="item.logo" alt />
+            <img :src="`http://www.cepsp.com.cn/${item.logo}`" alt />
             <div>
               <p></p>
               <p></p>
@@ -192,6 +192,10 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+#homeContainerBottom_mid_content>a>img{
+  width: 170px;
+  height: 127px;
 }
 #homeContainerBottom_mid_content > a > p > span {
   margin-right: 5px;
