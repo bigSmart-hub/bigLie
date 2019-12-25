@@ -8,10 +8,11 @@
         <div id="aaaa">
           <div class="container_left" v-if="listBol">
             <ul v-for="(item,index) in listData" :key="index">
-              <a
+              <!-- <a
                 :href="`http://psp.eol.cn/education/classes?id=${item.old_id}`"
                 target="blank"
-              >{{item.name}}</a>
+              >{{item.name}}</a>-->
+              <a href="#" @click="searchList">{{item.name}}</a>
               <li v-for="(item1,index) in item.children.slice(0,2)" :key="index">
                 <a
                   :href="`http://psp.eol.cn/education/classes?id=${item1.old_id}`"
@@ -23,19 +24,26 @@
                   <ul style="color:black" class="yingcang">
                     <a
                       class="erji_title"
+                      style="color:black"
                       :href="`http://psp.eol.cn/education/classes?id=${item1.old_id}`"
                       target="blank"
                     >{{item1.name}}</a>
-                    <li v-for="(item2,index) in item1.children" :key="index">
-                      <a
-                        :href="`http://psp.eol.cn/education/classes?id=${item2.old_id}`"
-                        target="blank"
-                      >{{item2.name}}</a>
-                    </li>
+                    <div>
+                      <li v-for="(item2,index) in item1.children" :key="index">
+                        <a
+                          style="color: #666666"
+                          :href="`http://psp.eol.cn/education/classes?id=${item2.old_id}`"
+                          target="blank"
+                        >{{item2.name}}</a>
+                      </li>
+                    </div>
                   </ul>
                 </li>
               </ul>
             </ul>
+            <a href="#" class="xiaodu">
+              <img src="../assets/小度.svg" alt />
+            </a>
           </div>
         </div>
         <!-- 右边登陆注册 -->
@@ -44,14 +52,14 @@
             <!-- 登陆注册 -->
             <div>
               <div>
-                <i class="el-icon-s-custom"></i>
+                <img src="../assets/登录人物.png" alt class="people" />
                 <p>欢迎登陆</p>
                 <p>EOL公共服务平台</p>
                 <div class="login">
-                  <a href="http://psp.eol.cn/index/user/register.html">
+                  <a href="http://psp.eol.cn/index/user/register.html" target="blank">
                     <button type="submit" class="btn1" @click="Login(login)">注册</button>
                   </a>
-                  <a href="http://psp.eol.cn/index/user/login.html">
+                  <a href="http://psp.eol.cn/index/user/login.html" target="blank">
                     <button type="submit" class="btn2" @click="Register(register)">登陆</button>
                   </a>
                 </div>
@@ -60,9 +68,27 @@
             <!-- 小新闻 -->
             <div>
               <el-tabs type="border-card">
-                <el-tab-pane label="平台公告" class="choic">平台公告</el-tab-pane>
-                <el-tab-pane label="平台规则" class="choic">平台规则</el-tab-pane>
-                <el-tab-pane label="学历政策" class="choic">学历政策</el-tab-pane>
+                <el-tab-pane label="平台公告" class="choic">
+                  <ul class="notice">
+                    <li v-for="(item,index) in notice.notice" :key="index">
+                      <a
+                        :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
+                        target="blank"
+                      >{{item.title}}</a>
+                    </li>
+                  </ul>
+                </el-tab-pane>
+                <el-tab-pane label="平台规则" class="choic">
+                  <ul class="notice">
+                    <li v-for="(item,index) in notice.rule" :key="index">
+                      <a
+                        :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
+                        target="blank"
+                      >{{item.title}}</a>
+                    </li>
+                  </ul>
+                </el-tab-pane>
+                <el-tab-pane label="学历政策" class="choic"></el-tab-pane>
               </el-tabs>
             </div>
           </div>
@@ -78,8 +104,8 @@
       <div class="countryHomePage2_container">
         <div class="countryHomePage2_img" v-for="(item,index) in organizationData" :key="index">
           <img :src="`http://www.cepsp.com.cn${item.logo}`" alt />
-          <a :href="`http://psp.eol.cn/organization/${item.old_id}/index`" target="blank">
-            <div></div>
+          <a href="#">
+            <div @click="toMechanism(item)"></div>
           </a>
         </div>
         <div @click="changeOrganization" class="countryHomePage2_change">
@@ -88,6 +114,9 @@
         </div>
       </div>
     </div>
+    <div class="advertisement">
+      <img src="../assets/条04.svg" alt class="homeContainerContent_content_img" />
+    </div>
     <!-- 分类 -->
     <div id="countryHomePage3">
       <div class="countryHomePage3_left">
@@ -95,7 +124,7 @@
           <div class="countryHomePage3_left_img">
             <p>{{item.name}}</p>
             <div></div>
-            <img :src="`http://www.cepsp.com.cn${item.pc_img}`" alt />
+            <img :src="`http://www.cepsp.com.cn/${item.pc_img}`" alt />
           </div>
           <div class="countryHomePage3_left_content">
             <a
@@ -104,32 +133,35 @@
               :key="n"
               target="blank"
             >
-              <img :src="`http://www.cepsp.com.cn${m.logo}`" alt />
+              <img
+                :src="`http://www.cepsp.com.cn/${(m.image.length!=0||m.logo.length!=0)?(m.image.length?m.image:m.logo):cdb}`"
+                alt
+              />
               <div>
                 <p>{{m.title}}</p>
               </div>
               <p>{{m.category.name}}</p>
-              <p>￥6800</p>
+              <p>{{m.price}}</p>
             </a>
           </div>
         </div>
       </div>
     </div>
     <!-- 领券中心 -->
-    <div id="countryHomePage4">
+    <!-- <div id="countryHomePage4">
       <div class="titel">
         <div></div>
         <p>品牌教育机构</p>
       </div>
       <div class="coupons">
-        <!-- 红包 -->
+        
         <div class="coupons_left">
           <a href>
             <img src="../assets/组 57.svg" alt />
             <img src="../assets/减去 3.svg" alt />
           </a>
         </div>
-        <!-- 优惠券 -->
+       
         <div class="coupons_right">
           <a href v-for="(item,index) in [1,1,1,1,1,1]" :key="index">
             <div>
@@ -144,6 +176,9 @@
           </a>
         </div>
       </div>
+    </div>-->
+    <div class="advertisement">
+      <img src="../assets/条06.svg" alt class="homeContainerContent_content_img" />
     </div>
     <!-- 快速领证 -->
     <div id="countryHomePage5">
@@ -152,7 +187,9 @@
           <div
             v-for="(item,index) in examination"
             :key="index"
-            :style="`background: url(http://www.cepsp.com.cn${item.logo});background-size: 220px 217px;`"
+            :style="`background: url(http://www.cepsp.com.cn${item.image});background-size: 220px 175px;
+            background-repeat: no-repeat; background-color: #ffffff;background-position: top center;
+            `"
           >
             <a :href="`http://psp.eol.cn/class/${item.id}`" target="blank">
               <div class="zhezhao"></div>
@@ -176,14 +213,15 @@
     <div id="countryHomePage6">
       <div v-for="(item,index) in contents1" :key="index" class="countryHomePage6_content">
         <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
-          <img :src="`http://www.cepsp.com.cn${item.logo}`" alt />
+          <img :src="`http://www.cepsp.com.cn/${item.image}`" alt />
           <p>
-            <span>高校培训</span>
-            <span>高端研修</span>
+            <span>{{item.category.name}}</span>
+            <span>{{item.category_parent.name}}</span>
           </p>
           <p>{{item.title}}</p>
           <p>
-            <span>￥</span>6800
+            <span>￥</span>
+            {{item.price}}
           </p>
         </a>
       </div>
@@ -192,17 +230,23 @@
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="指导单位" name="first">
           <div class="countryHomePage7_bottom_text">
-            <li v-for="(item3,index) in contents" :key="index">{{item3.text}}</li>
+            <li v-for="(item3,index) in partner[0]" :key="index">
+              <a :href="item3.url" target="blank">{{item3.title}}</a>
+            </li>
           </div>
         </el-tab-pane>
         <el-tab-pane label="合作伙伴" name="second">
           <div class="countryHomePage7_bottom_text">
-            <li v-for="(item3,index) in contents" :key="index">{{item3.text}}</li>
+            <li v-for="(item3,index) in partner[1]" :key="index">
+              <a :href="item3.url" target="blank">{{item3.title}}</a>
+            </li>
           </div>
         </el-tab-pane>
         <el-tab-pane label="CEPSP省级合作发展中心" name="third">
           <div class="countryHomePage7_bottom_text">
-            <li v-for="(item3,index) in contents" :key="index">{{item3.text}}</li>
+            <li v-for="(item3,index) in partner[2]" :key="index">
+              <a :href="item3.url" target="blank">{{item3.title}}</a>
+            </li>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -213,7 +257,10 @@
 export default {
   data() {
     return {
+      partner: "",
+      notice: "",
       listData: "",
+      cdb: require("../assets/WechatIMG10.png"),
       organizationData: [], //品牌机构列表
       studyData: [], //成人学历列表
       examination: [], //资格考试
@@ -232,6 +279,18 @@ export default {
     };
   },
   created() {
+    fetch(`/api/index/right_article`, {
+      headers: {
+        "content-type": "application/json"
+      },
+      method: "GET"
+    })
+      .then(data => {
+        return data.json();
+      })
+      .then(res => {
+        this.notice = res;
+      });
     fetch(`/api/index/favorite`, {
       headers: {
         "content-type": "application/json"
@@ -245,22 +304,35 @@ export default {
         this.contents1 = res;
         console.log(this.contents1);
       });
-    fetch(`/api/index/urls`, {
-      // must match 'Content-Type' header
-      headers: {
-        "content-type": "application/json"
-      },
-      method: "GET" // *GET, POST, PUT, DELETE, etc.
-      // mode: 'cors', // no-cors, cors, *same-origin
-    })
-      .then(data => {
-        return data.json();
-      })
-      .then(res => {
-        this.contents = res;
-      });
   },
   methods: {
+    toMechanism(item) {
+      let id=item.id  
+      this.$router.push({
+        path: "/mechanism/"+id
+      });
+    },
+    // 获取合作伙伴
+    getCooperativePartner() {
+      fetch(`/api/index/urls`, {
+        // must match 'Content-Type' header
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "GET" // *GET, POST, PUT, DELETE, etc.
+        // mode: 'cors', // no-cors, cors, *same-origin
+      })
+        .then(data => {
+          return data.json();
+        })
+        .then(res => {
+          let arr = [];
+          for (let i in res) {
+            arr.push(res[i]);
+          }
+          this.partner = arr;
+        });
+    },
     //获取品牌机构
     getOrganization() {
       fetch(`/api/index/organizations`, {
@@ -276,7 +348,7 @@ export default {
         })
         .then(res => {
           this.organizationData = res;
-          console.log(this.organizationData);
+          console.log(this.organizationData, 999);
         });
     },
     //成人学历
@@ -294,7 +366,7 @@ export default {
         })
         .then(res => {
           this.studyData = res;
-          console.log(res, 6666);
+          console.log(this.studyData);
         });
     },
     //资格考试
@@ -312,7 +384,6 @@ export default {
         })
         .then(res => {
           this.examination = res;
-          console.log(this.examination);
         });
     },
     //切换Logo
@@ -320,11 +391,12 @@ export default {
       this.getOrganization();
     },
     Register() {
-      this.register = true;
+      // 弹出框状态改变
+      // this.register = true;
       this.$root.bus.$emit("11", this.register);
     },
     Login() {
-      this.login = true;
+      // this.login = true;
       this.$root.bus.$emit("12", this.login);
     },
     handleClick(tab, event) {
@@ -347,9 +419,8 @@ export default {
           arr2.push(res[key]);
         }
         this.listData = arr2;
-        console.log(arr2);
-        console.log(this.listData[0].children);
       });
+    this.getCooperativePartner();
     this.getOrganization();
     this.getAdultStudy();
     this.getExamination();
@@ -365,20 +436,63 @@ export default {
   margin: 0;
   padding: 0;
 }
+#countryHomePage .notice {
+  margin: 10px 0 10px 15px;
+}
+#countryHomePage .notice li {
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+  white-space: nowrap; /*强制不换行*/
+  width: 180px;
+  margin-bottom: 5px;
+}
+.advertisement .homeContainerContent_content_img {
+  margin: 10px 0 0 0;
+}
+.advertisement {
+  width: 1200px;
+  margin: 0 auto;
+}
+#countryHomePage .notice li a {
+  font-size: 14px;
+  color: #888888;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#countryHomePage .notice li:hover a {
+  color: #d12d2c;
+}
+#countryHomePage5 #countryHomePage5_img {
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  background-position: center;
+}
 #countryHomePage5 .countryHomePage5_img > div > div {
   background-size: 220px 217px;
 }
-#countryHomePage #countryHomePage .erji_father {
-  position: relative;
+#countryHomePage .people {
+  width: 41px;
+  height: 41px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+#countryHomePage .yingcang > a {
+  margin: 10px 0 10px 20px;
+  width: 80px;
 }
 #countryHomePage .yingcang {
   display: flex;
-  flex-wrap: wrap;
-  margin: 15px 15px;
 }
-#countryHomePage .yingcang > li {
-  font-size: 12px;
-  margin: 10px 10px;
+#countryHomePage .yingcang div {
+  display: flex;
+  flex-wrap: wrap;
+  width: 550px;
+}
+
+#countryHomePage .yingcang div > li {
+  font-size: 14px;
+  margin: 10px 0 10px 20px;
 }
 #countryHomePage .container_left {
   width: 298px;
@@ -400,37 +514,37 @@ export default {
 }
 #countryHomePage .container_left > ul:nth-child(2) > ul {
   position: absolute;
-  top: -92px;
+  top: -75px;
 }
 #countryHomePage .container_left > ul:nth-child(3) > ul {
   position: absolute;
-  top: -144px;
+  top: -110px;
 }
 #countryHomePage .container_left > ul:nth-child(4) > ul {
   position: absolute;
-  top: -196px;
+  top: -145px;
 }
 #countryHomePage .container_left > ul:nth-child(5) > ul {
   position: absolute;
-  top: -248px;
+  top: -180px;
 }
 #countryHomePage .container_left > ul:nth-child(6) > ul {
   position: absolute;
-  top: -300px;
+  top: -215px;
 }
 #countryHomePage .container_left > ul:nth-child(7) > ul {
   position: absolute;
-  top: -352px;
+  top: -250px;
 }
 #countryHomePage .container_left > ul:nth-child(8) > ul {
   position: absolute;
-  top: -404px;
+  top: -285px;
 }
 
 #countryHomePage .erji_right {
   width: 672px;
   height: 480px;
-  background-color: black;
+  background-color: white;
   position: absolute;
   left: 297px;
   top: 272px;
@@ -453,6 +567,7 @@ export default {
   font-size: 14px;
   letter-spacing: 0px;
   color: #666666;
+  width: 60px;
 }
 
 #countryHomePage .container_left > ul {
@@ -473,13 +588,15 @@ export default {
   width: 298px;
   height: 480px;
 }
-#countryHomePage7 .countryHomePage7_bottom_text > li {
+#countryHomePage7 .countryHomePage7_bottom_text > li > a {
   font-size: 14px;
   letter-spacing: 1px;
   color: #999999;
   margin-right: 60px;
-  list-style: none;
   margin-top: 10px;
+}
+#countryHomePage7 .countryHomePage7_bottom_text > li {
+  list-style: none;
 }
 #countryHomePage7 .countryHomePage7_bottom_text {
   display: flex;
@@ -509,6 +626,10 @@ export default {
 #countryHomePage6 .countryHomePage6_content > a {
   display: block;
   padding: 20px 10px 26px;
+  text-align: center;
+}
+#countryHomePage6 .countryHomePage6_content > a p {
+  text-align: start;
 }
 #countryHomePage6 .countryHomePage6_content > a > p:nth-child(2) {
   display: flex;
@@ -519,6 +640,10 @@ export default {
   font-size: 14px;
   letter-spacing: 1px;
   color: #d12d2c;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #countryHomePage6 .countryHomePage6_content > a > p:nth-child(3) {
   font-size: 16px;
@@ -539,7 +664,7 @@ export default {
   margin-top: 15px;
 }
 #countryHomePage6 .countryHomePage6_content > a > img {
-  width: 100%;
+  width: 200px;
   height: 150px;
 }
 #countryHomePage6 .countryHomePage6_content {
@@ -619,7 +744,7 @@ export default {
   left: 10px;
 }
 #countryHomePage5 .countryHomePage5_img .text2 > p {
-  width: 100px;
+  width: 120px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -720,13 +845,13 @@ export default {
 }
 #countryHomePage3 .countryHomePage3_left_content div > p {
   font-size: 12px;
-  width: 100px;
+  width: 160px;
   letter-spacing: 1px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #d12d2c;
-  margin-right: 20px;
+  padding-top: 10px;
 }
 #countryHomePage3 .countryHomePage3_left_content > a > img {
   width: 160px;
@@ -776,6 +901,7 @@ export default {
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  margin-top: 25px;
 }
 #countryHomePage3 .countryHomePage3_left {
   display: flex;
@@ -840,8 +966,7 @@ export default {
   position: relative;
 }
 #countryHomePage2 .countryHomePage2_img > img {
-  width: 165px;
-   height: 132px;
+  width: 100px;
 }
 #countryHomePage2 .countryHomePage2_img:nth-child(6n + 1) {
   border-left: none;
@@ -965,6 +1090,7 @@ export default {
 #countryHomePage .login {
   display: flex;
   justify-content: space-around;
+  margin-bottom: 20px;
 }
 #countryHomePage .container_right p {
   font-size: 12px;

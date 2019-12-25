@@ -547,9 +547,9 @@ export default {
 }
 #searchList .searchList_left > div:nth-child(3) {
   width: 940px;
-  height: 2920px;
   background-color: #ffffff;
   margin-top: 20px;
+  padding-bottom: 20px
 }
 #searchList .searchList_left > div:nth-child(2) {
   height: 240px;

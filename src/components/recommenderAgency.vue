@@ -5,12 +5,12 @@
       <p>推荐机构</p>
     </div>
     <div>
-      <div v-for="(item,index) in [1,1,1,1,1,1,1,1]" :key="index" class="qualityAgency_text">
-        <a href="#">
+      <div v-for="(item,index) in org_data" :key="index" class="qualityAgency_text">
+        <a :href="`http://psp.eol.cn/organization/${item.old_id}/index`">
           <div class="qualityAgency_list">
-            <img src="../assets/timg(2).svg" alt />
+            <img :src="`http://www.cepsp.com.cn/${item.logo?item.logo:cdb}`" alt />
             <div>
-              <p>浙江大学继续教育学院</p>
+              <p>{{item.name}}</p>
               <p>已通过教育资质认证</p>
             </div>
           </div>
@@ -19,19 +19,56 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      org_data:'',
+      cdb: require("../assets/WechatIMG10.png"),
+    };
+  },
+  created() {
+      fetch(
+        // `/api/index/contents`,
+        `/api/org/org_list?name=${this.$route.params.name}`,
+
+        {
+          // must match 'Content-Type' header
+          headers: {
+            "content-type": "application/json"
+          },
+          method: "GET" // *GET, POST, PUT, DELETE, etc.
+          // mode: 'cors', // no-cors, cors, *same-origin
+        }
+      )
+        .then(res => res.json())
+        .then(res => {
+          this.org_data=res.recommend          
+        });
+    }
+};
+</script>
 <style>
 #qualityAgency .qualityAgency_list {
   display: flex;
   justify-content: space-between;
 }
-#qualityAgency .qualityAgency_list>div{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between
+#qualityAgency .qualityAgency_list > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 #qualityAgency .qualityAgency_list > div > p:nth-child(1) {
+  width: 137px;
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+  white-space: nowrap; /*强制不换行*/
   font-size: 14px;
   color: #333333;
+}
+#qualityAgency .qualityAgency_list img{
+  width: 70px;
+
 }
 #qualityAgency .qualityAgency_list > div > p:nth-child(2) {
   font-size: 12px;

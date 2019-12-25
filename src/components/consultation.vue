@@ -53,9 +53,7 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
-    }
+    onSubmit() {}
   }
 };
 </script>
@@ -63,7 +61,7 @@ export default {
 #consultation .sanjiao {
   border-top: 30px solid transparent;
   border-left: 239px solid #ffffff;
-  margin-bottom: 0px
+  margin-bottom: 0px;
 }
 #consultation .a1023 {
   width: 200px;
@@ -105,13 +103,13 @@ export default {
   flex-direction: column-reverse;
 }
 #consultation > div:nth-child(1) > p:nth-child(3) {
-   font-size: 20px;
+  font-size: 20px;
   color: #ffffff;
   padding-left: 10px;
 }
 #consultation > div:nth-child(1) > p:nth-child(2) {
-	font-size: 12px;
-	color: #ffffff;
+  font-size: 12px;
+  color: #ffffff;
   padding: 0 0 40px 10px;
 }
 #consultation > div > div {

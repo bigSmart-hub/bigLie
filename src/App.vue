@@ -2,11 +2,11 @@
   <div id="app">
     <Header />
     <!-- <HomePage /> -->
-    <Login/>
-    <Register/>
-    <City/>
+    <Login />
+    <Register />
+    <City />
     <router-view />
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
@@ -27,9 +27,7 @@ export default {
     Register,
     City
   },
-  mounted() {
-    console.log(111);
-  }
+  mounted() {}
 };
 </script>
 

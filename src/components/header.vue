@@ -57,10 +57,10 @@
         </li>
         <li @click="erji"></li>
         <li @click="Register(register)">
-          <a href="http://psp.eol.cn/index/user/login.html">会员登录</a>
+          <a href="http://psp.eol.cn/index/user/login.html" target="blank">会员登录</a>
         </li>
         <li @click="Login(login)">
-          <a href="http://psp.eol.cn/index/user/register.html">会员注册</a>
+          <a href="http://psp.eol.cn/index/user/register.html" target="blank">会员注册</a>
         </li>
       </ul>
     </nav>
@@ -85,7 +85,7 @@
       </div>
       <!-- logo部分 全国站-->
       <div class="heade_mid_right2" v-else>
-        <div class="logo1"></div>
+        <!-- <div class="logo1"></div>
         <div>
           <p class="text1">中国教育在线</p>
           <p class="text2">公共服务平台</p>
@@ -95,7 +95,8 @@
         <div class="text3">
           <p>推动教育资源均衡</p>
           <p>服务全名终生学习</p>
-        </div>
+        </div> -->
+        <img src="../assets/组 135.png" alt="">
       </div>
       <!-- 搜索框部分 -->
       <div class="heade_mid_left">
@@ -122,7 +123,7 @@
           <li @click="toEducationalServices">教育机构</li>
         </a>
         <a href="#">
-          <li @click="toSearchList2">秒懂社区</li>
+          <li>秒懂社区</li>
         </a>
       </div>
       <div class="heade_bottom_right">
@@ -146,7 +147,6 @@ export default {
       city: false,
       bol: false,
       tan: false,
-      cityaa: 1,
       province: "全国站",
       provinceId: "0"
     };
@@ -162,7 +162,8 @@ export default {
   },
   methods: {
     Register() {
-      this.register = true;
+      // 弹出框状态改变
+      // this.register = true;
       this.$root.bus.$emit("11", this.register);
       let params = {
         user_name: "saopao",
@@ -191,11 +192,8 @@ export default {
         })
         .catch(e => console.log(e));
     },
-    toSearchList2() {
-      this.$router.push("./searchList2");
-    },
     Login() {
-      this.login = true;
+      // this.login = true;
       this.$root.bus.$emit("12", this.login);
     },
     City() {
@@ -259,6 +257,7 @@ export default {
 }
 nav {
   height: 30px;
+  padding-top: 5px;
 }
 .heade_mid_right2 {
   width: 526px;
@@ -378,7 +377,7 @@ nav {
   color: #d12d2c;
 }
 .line {
-  margin: 7px 0 20px 0;
+  margin: 5px 0 20px 0;
   width: 100%;
   height: 1px;
   background-color: #aeaeae;

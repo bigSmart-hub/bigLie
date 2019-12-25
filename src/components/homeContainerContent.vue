@@ -17,8 +17,8 @@
           <el-tab-pane :label="currentData.children[0].name" name="first">
             <div id="text">
               <div v-for="(item,index) in currentData.children[0].courses" :key="index">
-                <a :href='`http://psp.eol.cn/class/${item.old_id}`' target="blank">
-                  <img :src="`http://www.cepsp.com.cn${item.logo}`" alt />
+                <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
+                 <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
                   <p class="text1">{{item.title}}</p>
                 </a>
               </div>
@@ -33,18 +33,24 @@
                 </div>
                 <div>
                   <div>
-                    <p>{{currentData.children[0].articles[0].title}}</p>
-                    <a :href='`http://psp.eol.cn/class/${currentData.children[0].articles[0].old_id}`' target="blank">
-                    <img :src="`http://www.cepsp.com.cn${currentData.pc_img}`" alt />
+                    <p>{{currentData.children[0].articles[0]}}</p>
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${currentData.children[0].articles[0]}`"
+                      target="blank"
+                    >
+                      <img
+                        :src="`http://www.cepsp.com.cn${currentData.children[0].articles[0]}`"
+                        alt
+                      />
                     </a>
                   </div>
                   <div>
                     <a
-                      :href='`http://psp.eol.cn/class/${item.old_id}`'
+                      :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
                       target="blank"
                       v-for="(item,index) in currentData.children[0].articles"
                       :key="index"
-                    >{{item.title}}</a>
+                    >{{item}}</a>
                   </div>
                 </div>
               </div>
@@ -58,10 +64,21 @@
                 <div>
                   <el-carousel :interval="5000" arrow="always">
                     <el-carousel-item
-                      v-for="(item,index) in currentData.children[0].recommend_orgs"
+                      v-for="(item,index) in [currentData.children[0].recommend_orgs.slice(0,6),
+                      currentData.children[0].recommend_orgs.slice(6,12),
+                      currentData.children[0].recommend_orgs.slice(12,18)]"
                       :key="index"
                     >
-                      <img :src="`http://www.cepsp.com.cn${item.logo}`" alt id="samll_img" />
+                      <div class="recommend_orgs">
+                        <a
+                          :href="`http://psp.eol.cn/organization/${item.old_id}/index`"
+                          v-for="(item,index) in item"
+                          :key="index"
+                          target="blank"
+                        >
+                          <img :src="`http://www.cepsp.com.cn${item.logo}`" alt id="samll_img" />
+                        </a>
+                      </div>
                     </el-carousel-item>
                   </el-carousel>
                 </div>
@@ -70,9 +87,9 @@
           </el-tab-pane>
           <el-tab-pane :label="currentData.children[1].name" name="second">
             <div id="text">
-              <div v-for="(item1,index) in currentData.children[1].courses" :key="index">
-                  <a :href='`http://psp.eol.cn/class/${item1.old_id}`' target="blank">
-                  <img :src="`http://www.cepsp.com.cn${item1.logo}`" alt />
+              <div v-for="(item,index) in currentData.children[1].courses" :key="index">
+                <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
+                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
                   <p class="text1">{{item1.title}}</p>
                 </a>
               </div>
@@ -88,12 +105,20 @@
                 <div>
                   <div>
                     <p>{{aa}}</p>
-                    <img :src="`http://www.cepsp.com.cn${bb}`" alt />
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
+                      target="blank"
+                      v-for="(item1,index) in currentData.children[1].articles"
+                      :key="index"
+                    >
+                      <img :src="`http://www.cepsp.com.cn${bb}`" alt />
+                    </a>
                   </div>
                   <div>
                     <a
-                      :href='`http://psp.eol.cn/class/${item1.old_id}`' target="blank"
-                      v-for="(item1,index) in currentData.children[1].articles"
+                      :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
+                      target="blank"
+                      v-for="(item,index) in currentData.children[1].articles"
                       :key="index"
                     >{{item1.title}}</a>
                   </div>
@@ -108,11 +133,17 @@
                 <!-- 底部右边轮播图 -->
                 <div>
                   <el-carousel :interval="5000" arrow="always">
-                    <el-carousel-item
-                      v-for="(item,index) in currentData.children[1].recommend_orgs"
-                      :key="index"
-                    >
-                      <img :src="item.logo" alt id="samll_img" />
+                    <el-carousel-item v-for="(item,index) in [orgs,orgs1,orgs2]" :key="index">
+                      <div class="recommend_orgs">
+                        <a
+                          :href="`http://psp.eol.cn/organization/${item.old_id}/index`"
+                          v-for="(item,index) in item"
+                          :key="index"
+                          target="blank"
+                        >
+                          <img :src="`http://www.cepsp.com.cn${item.logo}`" alt id="samll_img" />
+                        </a>
+                      </div>
                     </el-carousel-item>
                   </el-carousel>
                 </div>
@@ -122,8 +153,8 @@
           <el-tab-pane :label="currentData.children[2].name" name="third">
             <div id="text">
               <div v-for="(item,index) in currentData.children[2].courses" :key="index">
-                  <a :href='`http://psp.eol.cn/class/${item.old_id}`' target="blank">
-                  <img :src="item.logo" alt />
+                <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
+                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
                   <p class="text1">{{item.title}}</p>
                 </a>
               </div>
@@ -139,11 +170,19 @@
                 <div>
                   <div>
                     <p>{{aa}}</p>
-                    <img :src="bb" alt />
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${item1.old_id}`"
+                      target="blank"
+                      v-for="(item1,index) in currentData.children[2].articles"
+                      :key="index"
+                    >
+                      <img :src="`http://www.cepsp.com.cn${bb}`" alt />
+                    </a>
                   </div>
                   <div>
                     <a
-                      :href='`http://psp.eol.cn/class/${item.old_id}`' target="blank"
+                      :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
+                      target="blank"
                       v-for="(item,index) in currentData.children[2].articles"
                       :key="index"
                     >{{item.title}}</a>
@@ -159,11 +198,17 @@
                 <!-- 底部右边轮播图 -->
                 <div>
                   <el-carousel :interval="5000" arrow="always">
-                    <el-carousel-item
-                      v-for="(item,index) in currentData.children[2].recommend_orgs"
-                      :key="index"
-                    >
-                      <img :src="item.logo" alt id="samll_img" />
+                    <el-carousel-item v-for="(item,index) in [orgs,orgs1,orgs2]" :key="index">
+                      <div class="recommend_orgs">
+                        <a
+                          :href="`http://psp.eol.cn/organization/${item.old_id}/index`"
+                          v-for="(item,index) in item"
+                          :key="index"
+                          target="blank"
+                        >
+                          <img :src="`http://www.cepsp.com.cn${item.logo}`" alt id="samll_img" />
+                        </a>
+                      </div>
                     </el-carousel-item>
                   </el-carousel>
                 </div>
@@ -173,59 +218,8 @@
           <el-tab-pane :label="currentData.children[3].name" name="fourth">
             <div id="text">
               <div v-for="(item,index) in currentData.children[3].courses" :key="index">
-                 <a :href='`http://psp.eol.cn/class/${item.old_id}`' target="blank">
-                  <img :src="item.logo" alt />
-                  <p class="text1">{{item.title}}</p>
-                </a>
-              </div>
-            </div>
-            <!-- 底部内容 -->
-            <div class="text_bottom">
-              <!-- 底部左边内容 -->
-              <div class="text_bottom_left">
-                <div>
-                  <div></div>
-                  <p>新闻资讯</p>
-                </div>
-                <div>
-                  <div>
-                   <p>{{aa}}</p>
-                    <img :src="bb" alt />
-                  </div>
-                  <div>
-                    <a
-                      :href='`http://psp.eol.cn/class/${item.old_id}`' target="blank"
-                      v-for="(item,index) in currentData.children[3].articles"
-                      :key="index"
-                    >{{item.title}}</a>
-                  </div>
-                </div>
-              </div>
-              <!-- 底部右边内容 -->
-              <div class="text_bottom_right">
-                <div>
-                  <div></div>
-                  <p>推荐机构</p>
-                </div>
-                <!-- 底部右边轮播图 -->
-                <div>
-                  <el-carousel :interval="5000" arrow="always">
-                    <el-carousel-item
-                      v-for="(item,index) in currentData.children[3].recommend_orgs"
-                      :key="index"
-                    >
-                      <img :src="item.logo" alt id="samll_img" />
-                    </el-carousel-item>
-                  </el-carousel>
-                </div>
-              </div>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane :label="currentData.children[4].name" name="five">
-            <div id="text">
-              <div v-for="(item,index) in currentData.children[4].courses" :key="index">
-                  <a :href='`http://psp.eol.cn/class/${item.old_id}`' target="blank">
-                  <img :src="item.logo" alt />
+                <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
+                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
                   <p class="text1">{{item.title}}</p>
                 </a>
               </div>
@@ -241,11 +235,84 @@
                 <div>
                   <div>
                     <p>{{aa}}</p>
-                    <img :src="bb" alt />
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${item1.old_id}`"
+                      target="blank"
+                      v-for="(item1,index) in currentData.children[3].articles"
+                      :key="index"
+                    >
+                      <img :src="`http://www.cepsp.com.cn${bb}`" alt />
+                    </a>
                   </div>
                   <div>
                     <a
-                      :href='`http://psp.eol.cn/class/${item.old_id}`' target="blank"
+                      :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
+                      target="blank"
+                      v-for="(item,index) in currentData.children[3].articles"
+                      :key="index"
+                    >{{item.title}}</a>
+                  </div>
+                </div>
+              </div>
+              <!-- 底部右边内容 -->
+              <div class="text_bottom_right">
+                <div>
+                  <div></div>
+                  <p>推荐机构</p>
+                </div>
+                <!-- 底部右边轮播图 -->
+                <div>
+                  <el-carousel :interval="5000" arrow="always">
+                    <el-carousel-item v-for="(item,index) in [orgs,orgs1,orgs2]" :key="index">
+                      <div class="recommend_orgs">
+                        <a
+                          :href="`http://psp.eol.cn/organization/${item.old_id}/index`"
+                          v-for="(item,index) in item"
+                          :key="index"
+                          target="blank"
+                        >
+                          <img :src="`http://www.cepsp.com.cn${item.logo}`" alt id="samll_img" />
+                        </a>
+                      </div>
+                    </el-carousel-item>
+                  </el-carousel>
+                </div>
+              </div>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane :label="currentData.children[4].name" name="five">
+            <div id="text">
+              <div v-for="(item,index) in currentData.children[4].courses" :key="index">
+                <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
+                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
+                  <p class="text1">{{item.title}}</p>
+                </a>
+              </div>
+            </div>
+            <!-- 底部内容 -->
+            <div class="text_bottom">
+              <!-- 底部左边内容 -->
+              <div class="text_bottom_left">
+                <div>
+                  <div></div>
+                  <p>新闻资讯</p>
+                </div>
+                <div>
+                  <div>
+                    <p>{{aa}}</p>
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${item1.old_id}`"
+                      target="blank"
+                      v-for="(item1,index) in currentData.children[4].articles"
+                      :key="index"
+                    >
+                      <img :src="`http://www.cepsp.com.cn${bb}`" alt />
+                    </a>
+                  </div>
+                  <div>
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
+                      target="blank"
                       v-for="(item,index) in currentData.children[4].articles"
                       :key="index"
                     >{{item.title}}</a>
@@ -261,11 +328,147 @@
                 <!-- 底部右边轮播图 -->
                 <div>
                   <el-carousel :interval="5000" arrow="always">
-                    <el-carousel-item
-                      v-for="(item,index) in currentData.children[4].recommend_orgs"
+                    <el-carousel-item v-for="(item,index) in [orgs,orgs1,orgs2]" :key="index">
+                      <div class="recommend_orgs">
+                        <a
+                          :href="`http://psp.eol.cn/organization/${item.old_id}/index`"
+                          v-for="(item,index) in item"
+                          :key="index"
+                          target="blank"
+                        >
+                          <img :src="`http://www.cepsp.com.cn${item.logo}`" alt id="samll_img" />
+                        </a>
+                      </div>
+                    </el-carousel-item>
+                  </el-carousel>
+                </div>
+              </div>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane :label="currentData.children[5].name" name="six">
+            <div id="text">
+              <div v-for="(item,index) in currentData.children[5].courses" :key="index">
+                <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
+                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
+                  <p class="text1">{{item.title}}</p>
+                </a>
+              </div>
+            </div>
+            <!-- 底部内容 -->
+            <div class="text_bottom">
+              <!-- 底部左边内容 -->
+              <div class="text_bottom_left">
+                <div>
+                  <div></div>
+                  <p>新闻资讯</p>
+                </div>
+                <div>
+                  <div>
+                    <p>{{aa}}</p>
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${item1.old_id}`"
+                      target="blank"
+                      v-for="(item1,index) in currentData.children[5].articles"
                       :key="index"
                     >
-                      <img :src="item.logo" alt id="samll_img" />
+                      <img :src="`http://www.cepsp.com.cn${bb}`" alt />
+                    </a>
+                  </div>
+                  <div>
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
+                      target="blank"
+                      v-for="(item,index) in currentData.children[5].articles"
+                      :key="index"
+                    >{{item.title}}</a>
+                  </div>
+                </div>
+              </div>
+              <!-- 底部右边内容 -->
+              <div class="text_bottom_right">
+                <div>
+                  <div></div>
+                  <p>推荐机构</p>
+                </div>
+                <!-- 底部右边轮播图 -->
+                <div>
+                  <el-carousel :interval="5000" arrow="always">
+                    <el-carousel-item v-for="(item,index) in [orgs,orgs1,orgs2]" :key="index">
+                      <div class="recommend_orgs">
+                        <a
+                          :href="`http://psp.eol.cn/organization/${item.old_id}/index`"
+                          v-for="(item,index) in item"
+                          :key="index"
+                          target="blank"
+                        >
+                          <img :src="`http://www.cepsp.com.cn${item.logo}`" alt id="samll_img" />
+                        </a>
+                      </div>
+                    </el-carousel-item>
+                  </el-carousel>
+                </div>
+              </div>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane :label="currentData.children[6].name" name="seven">
+            <div id="text">
+              <div v-for="(item,index) in currentData.children[6].courses" :key="index">
+                <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
+                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
+                  <p class="text1">{{item.title}}</p>
+                </a>
+              </div>
+            </div>
+            <!-- 底部内容 -->
+            <div class="text_bottom">
+              <!-- 底部左边内容 -->
+              <div class="text_bottom_left">
+                <div>
+                  <div></div>
+                  <p>新闻资讯</p>
+                </div>
+                <div>
+                  <div>
+                    <p>{{aa}}</p>
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${item1.old_id}`"
+                      target="blank"
+                      v-for="(item1,index) in currentData.children[6].articles"
+                      :key="index"
+                    >
+                      <img :src="`http://www.cepsp.com.cn${bb}`" alt />
+                    </a>
+                  </div>
+                  <div>
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
+                      target="blank"
+                      v-for="(item,index) in currentData.children[6].articles"
+                      :key="index"
+                    >{{item.title}}</a>
+                  </div>
+                </div>
+              </div>
+              <!-- 底部右边内容 -->
+              <div class="text_bottom_right">
+                <div>
+                  <div></div>
+                  <p>推荐机构</p>
+                </div>
+                <!-- 底部右边轮播图 -->
+                <div>
+                  <el-carousel :interval="5000" arrow="always">
+                    <el-carousel-item v-for="(item,index) in [orgs,orgs1,orgs2]" :key="index">
+                      <div class="recommend_orgs">
+                        <a
+                          :href="`http://psp.eol.cn/organization/${item.old_id}/index`"
+                          v-for="(item,index) in item"
+                          :key="index"
+                          target="blank"
+                        >
+                          <img :src="`http://www.cepsp.com.cn${item.logo}`" alt id="samll_img" />
+                        </a>
+                      </div>
                     </el-carousel-item>
                   </el-carousel>
                 </div>
@@ -317,8 +520,12 @@ export default {
   },
   data() {
     return {
-      bb:'',
-      aa:'',
+      cdb: require("../assets/WechatIMG10.png"),
+      orgs: "",
+      orgs1: "",
+      orgs2: "",
+      bb: "",
+      aa: "",
       currentData: {
         children: [],
         name: ""
@@ -328,7 +535,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$route.params.id);
     this.getCurrentProvince(this.$route.params.id);
   },
   methods: {
@@ -381,14 +587,17 @@ export default {
         })
         .then(res => {
           console.log(res);
+          this.orgs = res.recommend_orgs.slice(0, 6);
+          this.orgs1 = res.recommend_orgs.slice(6, 12);
+          this.orgs2 = res.recommend_orgs.slice(12, 18);
           this.currentData.children[node.index].recommend_orgs =
             res.recommend_orgs;
-           if(res.articles.length){
-            this.aa=res.articles[0].title;
-            this.bb=res.articles[0].image
-           }else{
-             this.aa='aaaaaa'
-           }
+          if (res.articles.length) {
+            this.aa = res.articles[0].title;
+            this.bb = res.articles[0].image;
+          } else {
+            this.aa = "aaaaaa";
+          }
           this.currentData.children[node.index].articles = res.articles;
           this.currentData.children[node.index].courses = res.courses;
           this.$set(
@@ -415,7 +624,14 @@ export default {
   padding: 12px 10px;
   margin-bottom: 0px;
   display: flex;
-  justify-content: center
+  justify-content: center;
+}
+#homeContainerContent .recommend_orgs {
+  width: 140px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 auto;
 }
 #homeContainerContent .el-carousel__button {
   height: 10px;
@@ -423,9 +639,8 @@ export default {
   background-color: #d12d2c;
   border-radius: 50%;
 }
-#homeContainerContent #text img{
+#homeContainerContent #text img {
   width: 209px;
-  height: 156px;
 }
 #homeContainerContent .el-carousel__arrow {
   border: none;
@@ -444,9 +659,9 @@ export default {
 #homeContainerContent .el-carousel__arrow--right {
   right: 0;
 }
-#homeContainerContent .el-carousel--horizontal>ul{
+#homeContainerContent .el-carousel--horizontal > ul {
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 #homeContainerContent .el-carousel--horizontal {
   height: 192px;
@@ -455,8 +670,8 @@ export default {
   height: 192px;
 }
 #homeContainerContent #samll_img {
-  display: block;
-  margin: 0 auto;
+  margin-bottom: 5px;
+  width: 50px;
 }
 a {
   text-decoration: none;
@@ -488,10 +703,11 @@ a {
   font-family: Source Han Sans CN;
   font-size: 12px;
   color: #666666;
-  width: 100px;
+  width: 200px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  margin-top: 10px;
 }
 .text_bottom {
   height: 226px;
@@ -529,30 +745,42 @@ a {
   flex-direction: column-reverse;
   position: relative;
 }
-#homeContainerContent .text_bottom_left > div:nth-child(2) > div:nth-child(1) img{
+#homeContainerContent
+  .text_bottom_left
+  > div:nth-child(2)
+  > div:nth-child(1)
+  img {
   width: 242px;
   height: 180px;
-  position:absolute;
-  top: 0px
+  position: absolute;
+  top: 0px;
 }
-#homeContainerContent .text_bottom_left > div:nth-child(2) > div:nth-child(1) p{
+#homeContainerContent
+  .text_bottom_left
+  > div:nth-child(2)
+  > div:nth-child(1)
+  p {
   position: absolute;
   bottom: 0px;
   z-index: 1;
 }
-#homeContainerContent .text_bottom_left > div:nth-child(2) > div:nth-child(2)  {
+#homeContainerContent .text_bottom_left > div:nth-child(2) > div:nth-child(2) {
   margin-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-#homeContainerContent .text_bottom_left > div:nth-child(2) > div:nth-child(2)  a{
-font-size: 14px;
-    color: #666666;
-    width: 350px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+#homeContainerContent
+  .text_bottom_left
+  > div:nth-child(2)
+  > div:nth-child(2)
+  a {
+  font-size: 14px;
+  color: #666666;
+  width: 350px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 #homeContainerContent
   .text_bottom_left

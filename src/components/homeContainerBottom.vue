@@ -8,8 +8,11 @@
     <div class="homeContainerBottom_mid">
       <div>
         <div v-for="(item,index) in contents" :key="index" id="homeContainerBottom_mid_content">
-          <a :href='`http://psp.eol.cn/class/${item.old_id}`' target="blank">
-            <img :src="`http://www.cepsp.com.cn/${item.logo}`" alt />
+          <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
+            <img
+              :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`"
+              alt
+            />
             <div>
               <p></p>
               <p></p>
@@ -23,17 +26,23 @@
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="指导单位" name="first">
           <div class="countryHomePage7_bottom_text">
-            <li v-for="(item3,index) in contents1" :key="index">{{item3.title}}</li>
+            <li v-for="(item3,index) in partner[0]" :key="index">
+              <a :href="item3.url" target="blank">{{item3.title}}</a>
+            </li>
           </div>
         </el-tab-pane>
         <el-tab-pane label="合作伙伴" name="second">
           <div class="countryHomePage7_bottom_text">
-            <li v-for="(item3,index) in contents2" :key="index">{{item3.text}}</li>
+            <li v-for="(item3,index) in partner[1]" :key="index">
+              <a :href="item3.url" target="blank">{{item3.title}}</a>
+            </li>
           </div>
         </el-tab-pane>
         <el-tab-pane label="CEPSP省级合作发展中心" name="third">
           <div class="countryHomePage7_bottom_text">
-            <li v-for="(item3,index) in contents3" :key="index">{{item3.text}}</li>
+            <li v-for="(item3,index) in partner[2]" :key="index">
+              <a :href="item3.url" target="blank">{{item3.title}}</a>
+            </li>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -44,14 +53,17 @@
 export default {
   data() {
     return {
+      partner: "",
       activeName: "first",
       contents: "",
       contents1: "",
       contents2: "",
-      contents3: ""
+      contents3: "",
+      cdb: require("../assets/WechatIMG10.png")
     };
   },
-  mounted(){
+  mounted() {
+    this.getCooperativePartner();
     fetch(`/api/index/favorite`, {
       headers: {
         "content-type": "application/json"
@@ -80,6 +92,27 @@ export default {
       });
   },
   methods: {
+    getCooperativePartner() {
+      fetch(`/api/index/urls`, {
+        // must match 'Content-Type' header
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "GET" // *GET, POST, PUT, DELETE, etc.
+        // mode: 'cors', // no-cors, cors, *same-origin
+      })
+        .then(data => {
+          return data.json();
+        })
+        .then(res => {
+          let arr = [];
+          for (let i in res) {
+            arr.push(res[i]);
+          }
+          this.partner = arr;
+          console.log(arr);
+        });
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
@@ -97,7 +130,6 @@ export default {
         })
         .then(res => {
           this.contents = res.slice(1, 7);
-          console.log(this.contents);
         });
     }
   }
@@ -105,11 +137,13 @@ export default {
 </script>
 <style>
 #homeContainerBottom .countryHomePage7_bottom_text > li {
+  list-style: none;
+}
+#homeContainerBottom .countryHomePage7_bottom_text > li > a {
   font-size: 14px;
   letter-spacing: 1px;
   color: #999999;
   margin-right: 60px;
-  list-style: none;
   margin-top: 10px;
 }
 #homeContainerBottom .countryHomePage7_bottom_text {
@@ -171,9 +205,16 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+#homeContainerBottom_mid_content a{
+  height: 100%;
+   display: flex;
+  flex-direction: column;
+  justify-content: space-between
+}
 #homeContainerBottom_mid_content {
   width: 170px;
   height: 172px;
+ 
 }
 #homeContainerBottom_mid_content div {
   display: flex;
@@ -192,10 +233,10 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  margin-top: 15px;
 }
-#homeContainerBottom_mid_content>a>img{
+#homeContainerBottom_mid_content > a > img {
   width: 170px;
-  height: 127px;
 }
 #homeContainerBottom_mid_content > a > p > span {
   margin-right: 5px;

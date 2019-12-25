@@ -14,6 +14,7 @@
             <el-form ref="form" :model="sizeForm" size="mini">
               <el-form-item label>
                 <el-select v-model="sizeForm.region" placeholder="请选择">
+                  
                 </el-select>
               </el-form-item>
             </el-form>
@@ -25,6 +26,7 @@
             <el-form ref="form" :model="sizeForm" size="mini">
               <el-form-item label>
                 <el-select v-model="sizeForm.region" placeholder="请选择">
+                  
                 </el-select>
               </el-form-item>
             </el-form>
@@ -36,6 +38,7 @@
             <el-form ref="form" :model="sizeForm" size="mini">
               <el-form-item label>
                 <el-select v-model="sizeForm.region" placeholder="请选择">
+                  
                 </el-select>
               </el-form-item>
             </el-form>
@@ -101,7 +104,7 @@
           </div>
           <p>
             共
-            <span>5972</span>个专业
+            <span>{{allData.total}}</span>个专业
           </p>
         </div>
         <!-- 列表内容 -->
@@ -109,10 +112,13 @@
           <div v-for="(item,index) in allData.data" :key="index">
             <a href>
               <div class="searchList_left_content_img">
-                <img :src="item.logo" alt />
+                <img
+                  :src="`http://www.cepsp.com.cn/${(item.image.length!=0||item.logo.length!=0)?(item.image.length?item.image:item.logo):cdb}`"
+                  alt
+                />
               </div>
               <div>
-                <div class="zhuanye">{{item.title}}</div>
+                <p class="zhuanye">{{item.title}}</p>
                 <div class="searchList_left_content_text">
                   <p>招生学校：四川师范大学某某学院</p>
                   <p>专业层次：{{item.category.name}}</p>
@@ -209,8 +215,8 @@
           <p>常见问题</p>
         </div>
         <div>
-          <a href="#" v-for="(item,index) in [1,2,3,4,1,1,1]" :key="index">
-            <p>常见问题文本常见问题文本？</p>
+          <a href="#" v-for="(item,index) in problem" :key="index">
+            <p>{{item.title}}</p>
           </a>
         </div>
       </div>
@@ -224,6 +230,8 @@ import recommenderAgency from "../components/recommenderAgency";
 export default {
   data() {
     return {
+      problem:'',
+      cdb: require("../assets/WechatIMG10.png"),
       allData: {
         data: [],
         total: 0,
@@ -248,10 +256,6 @@ export default {
           src: require("@/assets/图层4.svg")
         }
       ],
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4,
 
       sizeForm: {
         name: "",
@@ -274,6 +278,7 @@ export default {
     }
   },
   mounted() {
+    this.commonProblem();
     this.searchListData("1");
   },
   methods: {
@@ -286,9 +291,7 @@ export default {
     searchListData(page) {
       fetch(
         // `/api/index/contents`,
-        `/api/search/courses?keywords=${
-          this.$route.params.name
-        }&page=${page}&page_size=15`,
+        `/api/search/courses?keywords=${this.$route.params.name}&page=${page}&page_size=15`,
 
         {
           // must match 'Content-Type' header
@@ -302,6 +305,27 @@ export default {
         .then(res => res.json())
         .then(res => {
           this.allData = res;
+          console.log(res, 1111);
+        });
+    },
+    // 常见问题
+    commonProblem(){
+      fetch(
+        // `/api/index/contents`,
+        `/api/study_centers_rand`,
+        {
+          // must match 'Content-Type' header
+          headers: {
+            "content-type": "application/json"
+          },
+          method: "GET" // *GET, POST, PUT, DELETE, etc.
+          // mode: 'cors', // no-cors, cors, *same-origin
+        }
+      )
+        .then(res => res.json())
+        .then(res => {
+          console.log(res,234);
+          this.problem=res
         });
     }
   },
@@ -322,6 +346,10 @@ export default {
   font-size: 12px;
   color: #999999;
   margin-bottom: 5px;
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+  white-space: nowrap; /*强制不换行*/
+width: 200px;
 }
 #searchList .searchList_right_on3 > div:nth-child(2) {
   padding: 10px 20px;
@@ -415,6 +443,9 @@ export default {
 #searchList .searchList_left_content_img {
   margin-right: 20px;
 }
+#searchList .searchList_left_content_img img {
+  width: 160px;
+}
 #searchList .zhuanye {
   font-size: 20px;
   color: #333333;
@@ -425,10 +456,14 @@ export default {
   justify-content: space-between;
   padding-right: 21px;
   border-right: 1px solid #dddddd;
+  width: 512px;
 }
-#searchList .searchList_left_content > div > a > div:nth-child(2) > div {
-  display: flex;
+#searchList .searchList_left_content > div > a > div:nth-child(2) > p {
   align-items: center;
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+  white-space: nowrap; /*强制不换行*/
+  width: 512px;
 }
 #searchList .searchList_left_content_text4 > p:nth-child(2) {
   font-size: 14px;
@@ -604,7 +639,6 @@ export default {
 }
 #searchList .searchList_left > div:nth-child(3) {
   width: 940px;
-  height: 2920px;
   background-color: #ffffff;
   margin-top: 20px;
 }

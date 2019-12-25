@@ -28,7 +28,7 @@ export default {
           isCheck: false
         },
         {
-          name: "咨询",
+          name: "资讯",
           id: "3",
           isCheck: false
         }
@@ -41,8 +41,6 @@ export default {
 
   methods: {
     toSearchList() {
-      console.log(this.$route.name);
-      console.log(this.searchKey)
       // this.$router.push("./searchList"); //跳转到指定组件
       if (this.currentSearch == "1") {
         this.$router.push({
@@ -122,6 +120,7 @@ export default {
   display: flex;
   width: 210px;
   justify-content: space-around;
+  margin: 5px 0
 }
 .list > li {
   list-style: none;

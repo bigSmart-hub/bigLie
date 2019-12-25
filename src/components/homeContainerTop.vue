@@ -5,23 +5,31 @@
       <!-- 左边列表 -->
       <div class="container_left">
         <ul v-for="(item,index) in listData" :key="index">
-          <a :href="`http://psp.eol.cn/education/classes?id=${item.old_id}`" target="blank">{{item.name}}</a>
+          <a
+            :href="`http://psp.eol.cn/education/classes?id=${item.old_id}`"
+            target="blank"
+          >{{item.name}}</a>
           <li v-for="(item1,index) in item.children.slice(0,2)" :key="index">
-            <a :href="`http://psp.eol.cn/education/classes?id=${item1.old_id}`" target="blank">
-              {{item1.name}}
-            </a>
+            <a
+              :href="`http://psp.eol.cn/education/classes?id=${item1.old_id}`"
+              target="blank"
+            >{{item1.name}}</a>
           </li>
           <ul class="erji_right">
             <li v-for="(item1,index) in item.children" :key="index">
-              <ul style="color:black" class="yingcang">
-                <a :href="`http://psp.eol.cn/education/classes?id=${item1.old_id}`" target="blank">
-                {{item1.name}}
-                </a>
+              <ul  class="yingcang">
+                <a style="color:black"
+                  :href="`http://psp.eol.cn/education/classes?id=${item1.old_id}`"
+                  target="blank"
+                >{{item1.name}}</a>
+                <div>
                 <li v-for="(item2,index) in item1.children" :key="index">
-                  <a :href="`http://psp.eol.cn/education/classes?id=${item2.old_id}`" target="blank">
-                  {{item2.name}}
-                  </a>
-                  </li>
+                  <a style="color: #666666"
+                    :href="`http://psp.eol.cn/education/classes?id=${item2.old_id}`"
+                    target="blank"
+                  >{{item2.name}}</a>
+                </li>
+                </div>
               </ul>
             </li>
           </ul>
@@ -43,14 +51,14 @@
           <!-- 登陆注册 -->
           <div>
             <div>
-              <i class="el-icon-s-custom"></i>
+              <img src="../assets/登录人物.png" alt class="people" />
               <p>欢迎登陆</p>
               <p>EOL公共服务平台</p>
               <div class="login">
-                <a href="http://psp.eol.cn/index/user/register.html">
+                <a href="http://psp.eol.cn/index/user/register.html" target="blank">
                   <button type="submit" class="btn1" @click="Login(login)">注册</button>
                 </a>
-                <a href="http://psp.eol.cn/index/user/login.html">
+                <a href="http://psp.eol.cn/index/user/login.html" target="blank">
                   <button type="submit" class="btn2" @click="Register(register)">登陆</button>
                 </a>
               </div>
@@ -59,9 +67,27 @@
           <!-- 小新闻 -->
           <div>
             <el-tabs type="border-card">
-              <el-tab-pane label="平台公告" class="choic">平台公告</el-tab-pane>
-              <el-tab-pane label="平台规则" class="choic">平台规则</el-tab-pane>
-              <el-tab-pane label="学历政策" class="choic">学历政策</el-tab-pane>
+              <el-tab-pane label="平台公告" class="choic">
+                <ul class="notice">
+                  <li v-for="(item,index) in notice.notice" :key="index">
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
+                      target="blank"
+                    >{{item.title}}</a>
+                  </li>
+                </ul>
+              </el-tab-pane>
+              <el-tab-pane label="平台规则" class="choic">
+                <ul class="notice">
+                  <li v-for="(item,index) in notice.rule" :key="index">
+                    <a
+                      :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
+                      target="blank"
+                    >{{item.title}}</a>
+                  </li>
+                </ul>
+              </el-tab-pane>
+              <el-tab-pane label="学历政策" class="choic"></el-tab-pane>
             </el-tabs>
           </div>
         </div>
@@ -73,6 +99,7 @@
 export default {
   data() {
     return {
+      notice: "",
       listData: "",
       register: false,
       login: false,
@@ -85,6 +112,18 @@ export default {
     };
   },
   mounted() {
+    fetch(`/api/index/right_article`, {
+      headers: {
+        "content-type": "application/json"
+      },
+      method: "GET"
+    })
+      .then(data => {
+        return data.json();
+      })
+      .then(res => {
+        this.notice = res;
+      });
     fetch(`/api/category`, {
       headers: {
         "content-type": "application/json"
@@ -100,17 +139,16 @@ export default {
           arr2.push(res[key]);
         }
         this.listData = arr2;
-        console.log(arr2);
-        console.log(this.listData[0].children);
       });
   },
   methods: {
+    // 弹出框状态改变
     Register() {
-      this.register = true;
+      // this.register = true;
       this.$root.bus.$emit("11", this.register);
     },
     Login() {
-      this.login = true;
+      // this.login = true;
       this.$root.bus.$emit("12", this.login);
     }
   }
@@ -121,6 +159,23 @@ export default {
   margin: 0;
   padding: 0;
 }
+#home_container_top .yingcang > a {
+  margin: 10px 0 10px 30px;
+  width: 80px;
+}
+ .yingcang {
+  display: flex;
+}
+#home_container_top .yingcang div {
+  display: flex;
+  flex-wrap: wrap;
+  width: 500px;
+}
+
+#home_container_top .yingcang div > li {
+  font-size: 14px;
+  margin: 10px 0 10px 20px;
+}
 #home_container_top
   .el-tabs--border-card
   > .el-tabs__header
@@ -128,40 +183,67 @@ export default {
   background-color: #ffffff;
   color: #d12d2c;
 }
-#home_container_top .container_left > ul{
+#home_container_top .notice {
+  margin: 10px 0 10px 15px;
+}
+
+#home_container_top .notice li {
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+  white-space: nowrap; /*强制不换行*/
+  width: 180px;
+  margin-bottom: 5px;
+}
+#home_container_top .notice li:hover a {
+  color: #d12d2c;
+}
+#home_container_top .notice li a {
+  font-size: 14px;
+  color: #888888;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#home_container_top .people {
+  width: 41px;
+  height: 41px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+#home_container_top .container_left > ul {
   position: relative;
 }
-#home_container_top .container_left > ul>ul{
+#home_container_top .container_left > ul > ul {
   position: absolute;
-  top: -40px
+  top: -40px;
 }
-#home_container_top .container_left > ul:nth-child(2)>ul{
+#home_container_top .container_left > ul:nth-child(2) > ul {
   position: absolute;
-  top: -82px
+  top: -81px;
 }
-#home_container_top .container_left > ul:nth-child(3)>ul{
+#home_container_top .container_left > ul:nth-child(3) > ul {
   position: absolute;
-  top: -124px
+  top: -122px;
 }
-#home_container_top .container_left > ul:nth-child(4)>ul{
+#home_container_top .container_left > ul:nth-child(4) > ul {
   position: absolute;
-  top: -166px
+  top: -163px;
 }
-#home_container_top .container_left > ul:nth-child(5)>ul{
+#home_container_top .container_left > ul:nth-child(5) > ul {
   position: absolute;
-  top: -208px
+  top: -204px;
 }
-#home_container_top .container_left > ul:nth-child(6)>ul{
+#home_container_top .container_left > ul:nth-child(6) > ul {
   position: absolute;
-  top: -250px
+  top: -245px;
 }
-#home_container_top .container_left > ul:nth-child(7)>ul{
+#home_container_top .container_left > ul:nth-child(7) > ul {
   position: absolute;
-  top: -292px
+  top: -286px;
 }
-#home_container_top .container_left > ul:nth-child(8)>ul{
+#home_container_top .container_left > ul:nth-child(8) > ul {
   position: absolute;
-  top: -334px
+  top: -327px;
 }
 #home_container_top .yingcang {
   display: flex;
@@ -170,7 +252,7 @@ export default {
 }
 #home_container_top .yingcang > li {
   font-size: 12px;
-  margin: 10px 10px;
+  margin: 0 15px 10px 15px;
 }
 #home_container_top .el-tabs--border-card {
   border: none;
@@ -227,6 +309,7 @@ export default {
 #home_container_top .login {
   display: flex;
   justify-content: space-around;
+  margin-bottom: 20px;
 }
 #home_container_top .container_right p {
   font-size: 12px;
@@ -267,29 +350,27 @@ export default {
   margin: 0 auto;
   padding: 10px 25px;
 }
-#home_container_top .container_left > ul>a{
-  color: black
+#home_container_top .container_left > ul > a {
+  color: black;
 }
-#home_container_top .container_left > ul li>a{
-  color: black
-}
-#home_container_top .erji_father {
-  position: relative;
+#home_container_top .container_left > ul li > a {
+  color: black;
 }
 #home_container_top .erji_right {
   width: 672px;
   height: 380px;
-  background-color: black;
+  background-color: white;
   position: absolute;
   left: 297px;
   top: 272px;
   opacity: 1;
   display: none;
+overflow:scroll;
 }
-#home_container_top .container_left > ul:hover  {
+#home_container_top .container_left > ul:hover {
   background-color: #d12d2c;
 }
-#home_container_top .container_left > ul:hover li a{
+#home_container_top .container_left > ul:hover li a {
   color: #fefefe;
 }
 #home_container_top .container_left > ul:hover .erji_right {
@@ -301,6 +382,10 @@ export default {
 #home_container_top .container_left > ul > li {
   font-size: 14px;
   letter-spacing: 0px;
+  color: #666666;
+  width: 60px;
+}
+#home_container_top .container_left > ul > li > a {
   color: #666666;
 }
 #home_container_top #list_last > li:first-child {

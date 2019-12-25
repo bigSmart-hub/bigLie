@@ -7,7 +7,6 @@
             <i class="el-icon-location-outline"></i>当前位置
           </div>
           <p>{{nowposObj.name}}</p>
-          <button class="queding" @click="efiningCities(province)">确定</button>
         </div>
         <div class="city_bottom">
           <el-scrollbar style="height: 100%;">
@@ -72,16 +71,12 @@ export default {
   },
   methods: {
     province1(item) {
-      console.log(item);
       this.nowposObj.name = item.name;
       this.nowposObj.id = item.id;
       this.nowposId = item.id;
       // this.nowpos = e.target.name;
-    },
-    efiningCities() {
-      console.log(this.$route.name);
       this.$root.bus.$emit("provinceName", this.nowposObj.name);
-      this.$root.bus.$emit("province",this.nowposId)
+      this.$root.bus.$emit("province", this.nowposId);
       this.changeCity = false;
       if (this.nowposObj.name == "全国站") {
         this.$router.push({
@@ -96,7 +91,7 @@ export default {
           path: "/homePage/" + this.nowposId
         });
       }
-    }
+    },
   }
 };
 </script>

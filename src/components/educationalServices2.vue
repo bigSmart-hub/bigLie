@@ -11,11 +11,10 @@
             <p>按区域查</p>
           </div>
           <ul>全部</ul>
-          <ul class="region_titel"
-          >
-            <li 
+          <ul class="region_titel">
+            <li
               v-for="(item1,index) in address"
-              @click="changeCurrentData(item1)"
+              @click="toEducationalServices2(item1)"
               :key="index"
               class="region_content"
             >
@@ -28,11 +27,11 @@
           <div class="educationalServices2_list_top">
             <p>
               共找到
-              <span>177</span>条搜索结果
+              <span>{{listData.total}}</span>条搜索结果
             </p>
             <div>
-              <button>最新发布</button>
-              <button>默认排序</button>
+              <button @click="searchListData0">最新发布</button>
+              <button @click="searchListData1">默认排序</button>
             </div>
           </div>
           <div class="educationalServices2_list_mid">
@@ -43,15 +42,19 @@
             >
               <div class="educationalServices2_list_mid_text_left">
                 <div>
-                  <img :src="item.logo" alt />
+                  <img
+                    class="ducationalServices2_img"
+                    :src="`http://www.cepsp.com.cn${item.logo?item.logo:cdb}`"
+                    alt
+                  />
                 </div>
                 <div class="educationalServices2_jigou">
                   <p>{{item.name}}</p>
                   <img src="../assets/84a550ffc60b1e042cd585e9d33ec05.svg" alt />
                   <img src="../assets/a3689b6dade3695708c07746a0631bf.svg" alt />
                   <img src="../assets/e810f360d92f26b30f8787ad4559494.svg" alt />
-                  <p>电话：180-2019-2018</p>
-                  <p>地址：浙江省温州市鹿城区万源路855</p>
+                  <p>{{item.contacts_tel}}</p>
+                  <p>地址：{{item.address}}</p>
                 </div>
                 <div class="educationalServices2_list_mid_text_right">
                   <button>咨询机构</button>
@@ -66,12 +69,12 @@
       </div>
       <!-- 右边内容 -->
       <div class="educationalServices2_container_right">
-          <div >
-              <consultation/>
-          </div>
-          <div>
-              <recommenderAgency/>
-          </div>
+        <div>
+          <consultation />
+        </div>
+        <div>
+          <recommenderAgency />
+        </div>
       </div>
     </div>
   </div>
@@ -86,55 +89,116 @@ export default {
   },
   data() {
     return {
-      logos:[],
-      address:[],
-      currentaddress:""
+      cdb: require("../assets/WechatIMG10.png"),
+      listData: "",
+      logos: [],
+      address: [],
+      currentaddress: ""
     };
   },
+  watch: {
+    $route(to, from) {
+      console.log(to.path, from,45678);
+    }
+  },
   methods: {
-    getProvinceData(id) {
-      fetch(`/api/org/org_index`, {
-        // must match 'Content-Type' header
-        headers: {
-          "content-type": `application/json`,
-           "province" :`${id}`
-        },
-        method: "GET" // *GET, POST, PUT, DELETE, etc.
-        // mode: 'cors', // no-cors, cors, *same-origin
-      })
-        .then(data => {
-          return data.json();
-        })
+    //排序0
+    searchListData0(page) {
+      fetch(
+        // `/api/index/contents`,
+        `/api/org/org_list?name=${this.$route.params.name}&page=${page}&page_size=15&type_list=0`,
+
+        {
+          // must match 'Content-Type' header
+          headers: {
+            "content-type": "application/json"
+          },
+          method: "GET" // *GET, POST, PUT, DELETE, etc.
+          // mode: 'cors', // no-cors, cors, *same-origin
+        }
+      )
+        .then(res => res.json())
         .then(res => {
           console.log(res);
-          this.logos = res.org;
-          this.news = res.org_articles;
-          this.org_new = res.org_new;
+          this.listData = res.list;
+          this.logos = res.list.data;
           this.currentaddress = res.address;
         });
     },
-    changeCurrentData(data){
-      this.getProvinceData(data.id)
+    //排序1
+    searchListData1(page) {
+      fetch(
+        // `/api/index/contents`,
+        `/api/org/org_list?name=${this.$route.params.name}&page=${page}&page_size=15&type_list=1`,
+
+        {
+          // must match 'Content-Type' header
+          headers: {
+            "content-type": "application/json"
+          },
+          method: "GET" // *GET, POST, PUT, DELETE, etc.
+          // mode: 'cors', // no-cors, cors, *same-origin
+        }
+      )
+        .then(res => res.json())
+        .then(res => {
+          console.log(res);
+          this.listData = res.list;
+          this.logos = res.list.data;
+          this.currentaddress = res.address;
+        });
+    },
+    // 机构搜索
+    searchListData(page) {
+      fetch(
+        // `/api/index/contents`,
+        `/api/org/org_list?name=${this.$route.params.name}&page=${page}&page_size=15`,
+
+        {
+          // must match 'Content-Type' header
+          headers: {
+            "content-type": "application/json"
+          },
+          method: "GET" // *GET, POST, PUT, DELETE, etc.
+          // mode: 'cors', // no-cors, cors, *same-origin
+        }
+      )
+        .then(res => res.json())
+        .then(res => {
+          console.log(res);
+          this.listData = res.list;
+          this.logos = res.list.data;
+          this.currentaddress = res.address;
+        });
+    },
+    // 点击省份查找机构
+    toEducationalServices2(item1) {
+      let s = item1.name;
+      if (s.length > 2) {
+        s = s.substring(0, s.length - 1);
+      }
+      this.$router.push({
+        path: "/educationalServices2/" + s
+      });
     }
   },
   mounted() {
-    this.getProvinceData(this.$route.params.id)
+    this.searchListData("1");
     fetch(`/api/common/areas`, {
-        // must match 'Content-Type' header
-        headers: {
-          "content-type": `application/json`,
-        },
-        method: "GET" // *GET, POST, PUT, DELETE, etc.
-        // mode: 'cors', // no-cors, cors, *same-origin
+      // must match 'Content-Type' header
+      headers: {
+        "content-type": `application/json`
+      },
+      method: "GET" // *GET, POST, PUT, DELETE, etc.
+      // mode: 'cors', // no-cors, cors, *same-origin
+    })
+      .then(data => {
+        return data.json();
       })
-        .then(data => {
-          return data.json();
-        })
-        .then(res => {
-          console.log(res);
-          this.address = res
-        });
-  },
+      .then(res => {
+        this.address = res;
+      });
+  }
 };
 </script>
 <style>
@@ -176,6 +240,9 @@ export default {
 #educationalServices2 .educationalServices2_jigou > p {
   font-size: 12px;
   color: #666666;
+}
+#educationalServices2 .ducationalServices2_img {
+  width: 120px;
 }
 #educationalServices2 .educationalServices2_list_mid_text_left {
   display: flex;
@@ -226,11 +293,16 @@ export default {
 }
 #educationalServices2 .region_content {
   list-style: none;
+  margin-left: 41px;
+  margin-top: 5px;
+}
+#educationalServices2 .region_content:hover a {
+  color: #d12d2c;
 }
 #educationalServices2 li > a {
   font-size: 14px;
   color: #666666;
-  margin-left: 41px;
+
   display: flex;
   align-items: center;
 }
@@ -239,7 +311,7 @@ export default {
   color: #333333;
   display: flex;
   flex-wrap: wrap;
-  margin: 23px 0 0 41px;
+  margin: 20px 30px;
 }
 #educationalServices2 .region {
   width: 940px;
@@ -268,7 +340,6 @@ export default {
 }
 #educationalServices2 .educationalServices2_list {
   width: 940px;
-  height: 1630px;
   background-color: #ffffff;
   border-radius: 4px;
   margin-top: 20px;

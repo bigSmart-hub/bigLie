@@ -3,111 +3,42 @@
     <!-- 大banner -->
     <div class="backgroundImage">
       <div id="bbbb">
-          <div class="container_left" v-if="listBol" >
-            <ul>
-              <li>
-                <a href="#">成人学历</a>
+        <div class="container_left" v-if="listBol">
+          <ul v-for="(item,index) in listData" :key="index">
+            <!-- <a
+                :href="`http://psp.eol.cn/education/classes?id=${item.old_id}`"
+                target="blank"
+            >{{item.name}}</a>-->
+            <a href="#">{{item.name}}</a>
+            <li v-for="(item1,index) in item.children.slice(0,2)" :key="index">
+              <a
+                :href="`http://psp.eol.cn/education/classes?id=${item1.old_id}`"
+                target="blank"
+              >{{item1.name}}</a>
+            </li>
+            <ul class="erji_right">
+              <li v-for="(item1,index) in item.children" :key="index">
+                <ul style="color:black" class="yingcang">
+                  <a
+                    class="erji_title"
+                    :href="`http://psp.eol.cn/education/classes?id=${item1.old_id}`"
+                    target="blank"
+                  >{{item1.name}}</a>
+                  <li v-for="(item2,index) in item1.children" :key="index">
+                    <a
+                      :href="`http://psp.eol.cn/education/classes?id=${item2.old_id}`"
+                      target="blank"
+                    >{{item2.name}}</a>
+                  </li>
+                </ul>
               </li>
-              <li>
-                <a href="#">自考考试</a>
-              </li>
-              <li>
-                <a href="#">成人高考</a>
-              </li>
-              <li></li>
             </ul>
-            <ul>
-              <li>
-                <a href="#">资格考试</a>
-              </li>
-              <li>
-                <a href="#">公职考</a>
-              </li>
-              <li>
-                <a href="#">从业资格</a>
-              </li>
-              <li></li>
-            </ul>
-            <ul>
-              <li>
-                <a href="#">社会培训</a>
-              </li>
-              <li>
-                <a href="#">企业大学</a>
-              </li>
-              <li>
-                <a href="#">社区教育</a>
-              </li>
-              <li></li>
-            </ul>
-            <ul>
-              <li>
-                <a href="#">国际教育</a>
-              </li>
-              <li>
-                <a href="#">考察交流</a>
-              </li>
-              <li>
-                <a href="#">中文国际</a>
-              </li>
-              <li></li>
-            </ul>
-            <ul>
-              <li>
-                <a href="#">职业教育</a>
-              </li>
-              <li>
-                <a href="#">职业大学</a>
-              </li>
-              <li>
-                <a href="#">1+x</a>
-              </li>
-              <li></li>
-            </ul>
-            <ul>
-              <li>
-                <a href="#">语言培训</a>
-              </li>
-              <li>
-                <a href="#">留学考试</a>
-              </li>
-              <li>
-                <a href="#">应用培训</a>
-              </li>
-              <li></li>
-            </ul>
-            <ul>
-              <li>
-                <a href="#">院校培训</a>
-              </li>
-              <li>
-                <a href="#">院校联盟</a>
-              </li>
-              <li>
-                <a href="#">教师培训</a>
-              </li>
-              <li></li>
-            </ul>
-            <ul id="list_last">
-              <li>
-                <a href="#">素质教育</a>
-              </li>
-              <li>
-                <a href="#">人文</a>
-              </li>
-              <li>
-                <a href="#">科技</a>
-              </li>
-              <li>
-                <a href="#">艺术</a>
-              </li>
-              <li></li>
-            </ul>
-            <a href="#">
-              <img class="xiaodu" src="../assets/小度.svg" alt />
-            </a>
-          </div>
+          </ul>
+          <a href="#" class="xiaodu">
+            <img src="../assets/小度.svg" alt />
+          </a>
         </div>
+      </div>
     </div>
     <!-- 优秀机构 -->
     <div class="excellentLnstitutions">
@@ -116,13 +47,9 @@
         <p>优秀机构</p>
       </div>
       <div class="excellentLnstitutions_a">
-        <div
-          v-for="(item,index) in logos"
-          :key="index"
-          class="excellentLnstitutions_a_img"
-        >
+        <div v-for="(item,index) in logos" :key="index" class="excellentLnstitutions_a_img">
           <a href>
-            <img :src="item.logo" alt />
+            <img :src="`http://www.cepsp.com.cn${item.logo}`" alt />
           </a>
         </div>
       </div>
@@ -137,7 +64,7 @@
         <div class="news_a_image" v-for="(item,index) in news" :key="index">
           <a href>
             <div class="news_a_image_left">
-              <img :src="item.image" alt />
+              <img :src="`http://www.cepsp.com.cn${item.image}`" alt />
             </div>
           </a>
           <div class="news_a_image_right">
@@ -158,11 +85,7 @@
         <p>最新入驻</p>
       </div>
       <div class="new_settled">
-        <div
-          class="new_settled_text"
-          v-for="(item,index) in org_new"
-          :key="index"
-        >
+        <div class="new_settled_text" v-for="(item,index) in org_new" :key="index">
           <p>{{item.name}}</p>
           <p>进驻时间：{{item.created_at}}</p>
         </div>
@@ -174,7 +97,7 @@
         <div></div>
         <p>按区域查</p>
       </div>
-      <ul>全部</ul>
+      <ul class="all">全部</ul>
       <ul class="region_titel">
         <li
           v-for="(item1,index) in address"
@@ -209,11 +132,12 @@ export default {
   },
   methods: {
     toEducationalServices2(item1) {
+      let s = item1.rname;
+      if (s.length > 2) {
+        s = s.substring(0, s.length - 1);
+      }
       this.$router.push({
-        name: "educationalServices2",
-        params: {
-          id: item1.rid
-        }
+        path: "/educationalServices2/" + s
       });
     },
     getProvinceData(id) {
@@ -230,7 +154,6 @@ export default {
           return data.json();
         })
         .then(res => {
-          console.log(res);
           this.logos = res.org;
           this.news = res.org_articles;
           this.org_new = res.org_new;
@@ -239,8 +162,23 @@ export default {
     }
   },
   mounted() {
+    fetch(`/api/category`, {
+      headers: {
+        "content-type": "application/json"
+      },
+      method: "GET"
+    })
+      .then(data => {
+        return data.json();
+      })
+      .then(res => {
+        let arr2 = [];
+        for (let key in res) {
+          arr2.push(res[key]);
+        }
+        this.listData = arr2;
+      });
     this.getProvinceData(this.$route.params.proId);
-    console.log(this.$route.params.proId);
     let that = this;
     this.$root.bus.$on("bol", function(value) {
       that.listBol = value;
@@ -253,15 +191,110 @@ export default {
   width: 1200px;
   margin: 0 auto;
 }
+#educationalServices .all {
+  padding-left: 30px;
+}
+#educationalServices .yingcang {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 15px 15px;
+}
+#educationalServices .yingcang > li {
+  font-size: 12px;
+  margin: 0 15px 10px 15px;
+}
+#educationalServices .container_left {
+  width: 298px;
+  height: 380px;
+  background-color: #ffffff;
+  opacity: 0.9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 0;
+  box-sizing: border-box;
+}
+#educationalServices .container_left > ul {
+  position: relative;
+}
+#educationalServices .container_left > ul > ul {
+  position: absolute;
+  top: -40px;
+}
+#educationalServices .container_left > ul:nth-child(2) > ul {
+  position: absolute;
+  top: -75px;
+}
+#educationalServices .container_left > ul:nth-child(3) > ul {
+  position: absolute;
+  top: -110px;
+}
+#educationalServices .container_left > ul:nth-child(4) > ul {
+  position: absolute;
+  top: -145px;
+}
+#educationalServices .container_left > ul:nth-child(5) > ul {
+  position: absolute;
+  top: -180px;
+}
+#educationalServices .container_left > ul:nth-child(6) > ul {
+  position: absolute;
+  top: -215px;
+}
+#educationalServices .container_left > ul:nth-child(7) > ul {
+  position: absolute;
+  top: -250px;
+}
+#educationalServices .container_left > ul:nth-child(8) > ul {
+  position: absolute;
+  top: -285px;
+}
+#educationalServices .erji_right {
+  width: 672px;
+  height: 480px;
+  background-color: black;
+  position: absolute;
+  left: 297px;
+  top: 272px;
+  opacity: 1;
+  display: none;
+}
+#educationalServices .container_left > ul:hover {
+  background-color: #d12d2c;
+}
+#educationalServices .container_left > ul:hover li a {
+  color: #fefefe;
+}
+#educationalServices .container_left > ul:hover .erji_right {
+  display: block;
+}
+#educationalServices .container_left > ul:hover .container_mid {
+  display: none;
+}
+#educationalServices .container_left > ul > li {
+  font-size: 14px;
+  letter-spacing: 0px;
+  color: #666666;
+  width: 60px;
+}
+
+#educationalServices .container_left > ul {
+  display: flex;
+  width: 248px;
+  height: 22px;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 10px 25px;
+}
+#educationalServices .container_left > ul > a {
+  color: black;
+}
+#educationalServices .container_left > ul li > a {
+  color: black;
+}
 #educationalServices .xiaodu {
   margin-top: 16px;
   margin-left: 20px;
-}
-#educationalServices .container_left > ul:not(:nth-child(8)) > li:nth-child(4) {
-  background-image: url("../assets/小箭头.svg");
-  width: 8px;
-  height: 14px;
-  margin-top: 5px;
 }
 #educationalServices .container_left > ul > li:nth-child(1) > a {
   font-size: 16px;
@@ -287,23 +320,6 @@ export default {
   letter-spacing: 0px;
   color: #666666;
 }
-#educationalServices #list_last > li:first-child {
-  font-size: 16px;
-  width: 64px;
-}
-#educationalServices #list_last > li {
-  font-size: 14px;
-  width: 28px;
-}
-#educationalServices #list_last > li:nth-child(5) {
-  background-image: url("../assets/小箭头.svg");
-  width: 8px;
-  height: 14px;
-  margin-top: 5px;
-  flex-direction: column;
-  direction: ltr;
-  flex-wrap: nowrap;
-}
 #educationalServices .container_left {
   width: 298px;
   height: 480px;
@@ -317,24 +333,19 @@ export default {
 }
 #educationalServices .container_left li {
   list-style: none;
-  width: 64px;
 }
 #educationalServices .region_titel li {
   list-style: none;
+  margin-left: 41px;
+  margin-top: 5px;
 }
 #educationalServices .region_titel li > a {
   font-size: 14px;
   color: #666666;
-  margin-left: 41px;
-  display: flex;
   align-items: center;
 }
-#educationalServices ul {
-  font-size: 18px;
-  color: #333333;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 23px 0 0 41px;
+#educationalServices .region_titel li:hover a {
+  color: #d12d2c;
 }
 #educationalServices .region {
   width: 1200px;
@@ -353,10 +364,19 @@ export default {
   height: 44px;
   margin: 0 0 14px 24px;
 }
+#educationalServices .region_titel {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px 30px;
+}
 #educationalServices .new_settled_text > p:nth-child(1) {
   font-size: 16px;
   color: #333333;
   margin-bottom: 6px;
+  width: 270px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #educationalServices .new_settled_text > p:nth-child(2) {
   font-size: 12px;
@@ -404,6 +424,9 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
+#educationalServices .excellentLnstitutions_a_img img {
+  height: 160px;
+}
 #educationalServices .excellentLnstitutions_a_img {
   width: 268px;
   height: 201px;
@@ -433,6 +456,10 @@ export default {
   display: flex;
   justify-content: space-between;
   margin: 0 0 30px 24px;
+}
+#educationalServices .news_a_image_left img {
+  width: 200px;
+  height: 150px;
 }
 #educationalServices .news_a_image_left {
   width: 200px;
