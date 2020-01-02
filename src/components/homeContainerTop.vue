@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div id="home_container_top_all">
+    <div class="adrres" v-if="bgim">
+      <img :src="require(`../assets/${bgim}1.png`)" alt="" >
+    </div>
     <!-- 轮播主题 -->
     <div id="home_container_top">
       <!-- 左边列表 -->
@@ -55,10 +58,10 @@
               <p>欢迎登陆</p>
               <p>EOL公共服务平台</p>
               <div class="login">
-                <a href="http://psp.eol.cn/index/user/register.html" target="blank">
+                <a href="http://www.cepsp.com.cn/org_admin#/user/register" target="blank">
                   <button type="submit" class="btn1" @click="Login(login)">注册</button>
                 </a>
-                <a href="http://psp.eol.cn/index/user/login.html" target="blank">
+                <a href="http://www.cepsp.com.cn/org_admin#/user/login" target="blank">
                   <button type="submit" class="btn2" @click="Register(register)">登陆</button>
                 </a>
               </div>
@@ -99,6 +102,7 @@
 export default {
   data() {
     return {
+      bgim:'',
       notice: "",
       listData: "",
       register: false,
@@ -110,6 +114,14 @@ export default {
         { src: require("@/assets/未标题-2.svg") }
       ]
     };
+  },
+  watch: {
+    $route(to, from) {
+      console.log(to.path, from);
+      if (this.$route.params.id) {
+        this.bgim= this.$route.params.id;
+      }
+    }
   },
   mounted() {
     fetch(`/api/index/right_article`, {
@@ -139,6 +151,7 @@ export default {
           arr2.push(res[key]);
         }
         this.listData = arr2;
+        this.bgim= this.$route.params.id;
       });
   },
   methods: {
@@ -158,6 +171,20 @@ export default {
 * {
   margin: 0;
   padding: 0;
+}
+#home_container_top_all{
+  width: 100%;
+  position: relative;
+}
+#home_container_top_all .adrres>img{
+  width: 100%;
+}
+#home_container_top_all .adrres{
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  z-index: -99;
+  width: 100%;
 }
 #home_container_top .yingcang > a {
   margin: 10px 0 10px 30px;
@@ -209,41 +236,6 @@ export default {
   height: 41px;
   margin: 0 auto;
   margin-top: 20px;
-}
-#home_container_top .container_left > ul {
-  position: relative;
-}
-#home_container_top .container_left > ul > ul {
-  position: absolute;
-  top: -40px;
-}
-#home_container_top .container_left > ul:nth-child(2) > ul {
-  position: absolute;
-  top: -81px;
-}
-#home_container_top .container_left > ul:nth-child(3) > ul {
-  position: absolute;
-  top: -122px;
-}
-#home_container_top .container_left > ul:nth-child(4) > ul {
-  position: absolute;
-  top: -163px;
-}
-#home_container_top .container_left > ul:nth-child(5) > ul {
-  position: absolute;
-  top: -204px;
-}
-#home_container_top .container_left > ul:nth-child(6) > ul {
-  position: absolute;
-  top: -245px;
-}
-#home_container_top .container_left > ul:nth-child(7) > ul {
-  position: absolute;
-  top: -286px;
-}
-#home_container_top .container_left > ul:nth-child(8) > ul {
-  position: absolute;
-  top: -327px;
 }
 #home_container_top .yingcang {
   display: flex;
@@ -330,7 +322,8 @@ export default {
   background-color: #d3dce6;
 }
 #home_container_top {
-  width: 100%;
+  width: 1200px;
+  margin: 0 auto;
   height: 400px;
   display: flex;
   justify-content: space-between;
@@ -366,6 +359,10 @@ export default {
   opacity: 1;
   display: none;
 overflow:scroll;
+}
+#home_container_top .container_left > ul>ul{
+  position: absolute;
+  top: 0
 }
 #home_container_top .container_left > ul:hover {
   background-color: #d12d2c;
@@ -413,8 +410,9 @@ overflow:scroll;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 40px 0;
+  padding: 20px 0;
   box-sizing: border-box;
+  position: relative;
 }
 #home_container_top .container_mid {
   width: 634px;

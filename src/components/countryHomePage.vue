@@ -12,7 +12,7 @@
                 :href="`http://psp.eol.cn/education/classes?id=${item.old_id}`"
                 target="blank"
               >{{item.name}}</a>-->
-              <a href="#" @click="searchList">{{item.name}}</a>
+              <a href="#">{{item.name}}</a>
               <li v-for="(item1,index) in item.children.slice(0,2)" :key="index">
                 <a
                   :href="`http://psp.eol.cn/education/classes?id=${item1.old_id}`"
@@ -41,9 +41,6 @@
                 </li>
               </ul>
             </ul>
-            <a href="#" class="xiaodu">
-              <img src="../assets/小度.svg" alt />
-            </a>
           </div>
         </div>
         <!-- 右边登陆注册 -->
@@ -56,10 +53,10 @@
                 <p>欢迎登陆</p>
                 <p>EOL公共服务平台</p>
                 <div class="login">
-                  <a href="http://psp.eol.cn/index/user/register.html" target="blank">
+                  <a href="http://www.cepsp.com.cn/org_admin#/user/register" target="blank">
                     <button type="submit" class="btn1" @click="Login(login)">注册</button>
                   </a>
-                  <a href="http://psp.eol.cn/index/user/login.html" target="blank">
+                  <a href="http://www.cepsp.com.cn/org_admin#/user/login" target="blank">
                     <button type="submit" class="btn2" @click="Register(register)">登陆</button>
                   </a>
                 </div>
@@ -104,7 +101,7 @@
       <div class="countryHomePage2_container">
         <div class="countryHomePage2_img" v-for="(item,index) in organizationData" :key="index">
           <img :src="`http://www.cepsp.com.cn${item.logo}`" alt />
-          <a href="#">
+          <a>
             <div @click="toMechanism(item)"></div>
           </a>
         </div>
@@ -127,12 +124,8 @@
             <img :src="`http://www.cepsp.com.cn/${item.pc_img}`" alt />
           </div>
           <div class="countryHomePage3_left_content">
-            <a
-              :href="`http://psp.eol.cn/class/${m.old_id}`"
-              v-for="(m,n) in item.courses"
-              :key="n"
-              target="blank"
-            >
+            <!-- @click="toCourseDetails" -->
+            <a  v-for="(m,n) in item.courses" :key="n" @click="toCourseDetails">
               <img
                 :src="`http://www.cepsp.com.cn/${(m.image.length!=0||m.logo.length!=0)?(m.image.length?m.image:m.logo):cdb}`"
                 alt
@@ -191,7 +184,7 @@
             background-repeat: no-repeat; background-color: #ffffff;background-position: top center;
             `"
           >
-            <a :href="`http://psp.eol.cn/class/${item.id}`" target="blank">
+            <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
               <div class="zhezhao"></div>
               <div class="border">
                 <div class="text1">
@@ -302,14 +295,18 @@ export default {
       })
       .then(res => {
         this.contents1 = res;
-        console.log(this.contents1);
       });
   },
   methods: {
-    toMechanism(item) {
-      let id=item.id  
+    toCourseDetails() {
       this.$router.push({
-        path: "/mechanism/"+id
+        path: "/courseDetails/"
+      });
+    },
+    toMechanism(item) {
+      let id = item.id;
+      this.$router.push({
+        path: "/mechanism/" + id
       });
     },
     // 获取合作伙伴
@@ -348,7 +345,6 @@ export default {
         })
         .then(res => {
           this.organizationData = res;
-          console.log(this.organizationData, 999);
         });
     },
     //成人学历
@@ -366,7 +362,6 @@ export default {
         })
         .then(res => {
           this.studyData = res;
-          console.log(this.studyData);
         });
     },
     //资格考试
@@ -418,7 +413,7 @@ export default {
         for (let key in res) {
           arr2.push(res[key]);
         }
-        this.listData = arr2;
+        this.listData = arr2; 
       });
     this.getCooperativePartner();
     this.getOrganization();
@@ -496,54 +491,23 @@ export default {
 }
 #countryHomePage .container_left {
   width: 298px;
-  height: 380px;
+  height: 450px;
   background-color: #ffffff;
   opacity: 0.9;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 40px 0;
+  padding: 20px 0;
   box-sizing: border-box;
+  position: relative
 }
-#countryHomePage .container_left > ul {
-  position: relative;
+#countryHomePage .container_left > ul > ul{
+position: absolute;
+top: 0
 }
-#countryHomePage .container_left > ul > ul {
-  position: absolute;
-  top: -40px;
-}
-#countryHomePage .container_left > ul:nth-child(2) > ul {
-  position: absolute;
-  top: -75px;
-}
-#countryHomePage .container_left > ul:nth-child(3) > ul {
-  position: absolute;
-  top: -110px;
-}
-#countryHomePage .container_left > ul:nth-child(4) > ul {
-  position: absolute;
-  top: -145px;
-}
-#countryHomePage .container_left > ul:nth-child(5) > ul {
-  position: absolute;
-  top: -180px;
-}
-#countryHomePage .container_left > ul:nth-child(6) > ul {
-  position: absolute;
-  top: -215px;
-}
-#countryHomePage .container_left > ul:nth-child(7) > ul {
-  position: absolute;
-  top: -250px;
-}
-#countryHomePage .container_left > ul:nth-child(8) > ul {
-  position: absolute;
-  top: -285px;
-}
-
 #countryHomePage .erji_right {
   width: 672px;
-  height: 480px;
+  height: 450px;
   background-color: white;
   position: absolute;
   left: 297px;
@@ -597,11 +561,12 @@ export default {
 }
 #countryHomePage7 .countryHomePage7_bottom_text > li {
   list-style: none;
+  margin-top: 10px
 }
 #countryHomePage7 .countryHomePage7_bottom_text {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 0 45px 0;
+  margin: 0 0 20px 0;
 }
 #countryHomePage7 {
   background-color: #ffffff;
@@ -1019,9 +984,10 @@ export default {
 }
 .countryHomePage_img {
   width: 100%;
-  height: 480px;
+  height: 450px;
   background-image: url("../assets/banner2.jpg.svg");
   background-position: center;
+  min-width: 1200px;
 }
 #countryHomePage .xiaodu {
   margin-top: 16px;
@@ -1166,17 +1132,6 @@ export default {
   flex-direction: column;
   direction: ltr;
   flex-wrap: nowrap;
-}
-#countryHomePage .container_left {
-  width: 298px;
-  height: 480px;
-  background-color: #ffffff;
-  opacity: 0.9;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 40px 0;
-  box-sizing: border-box;
 }
 #countryHomePage .container_right {
   display: flex;

@@ -15,6 +15,7 @@ import mechanism3 from "./components/mechanism3.vue";
 import mechanism4 from "./components/mechanism4.vue";
 import mechanism5 from "./components/mechanism5.vue";
 import mechanism6 from "./components/mechanism6.vue";
+import courseDetails from "./components/courseDetails.vue";
 Vue.use(Router)
 
 export default new Router({
@@ -34,24 +35,28 @@ export default new Router({
                     component: mechanism1
                 },
                 {
-                    path: '/mechanism2',
+                    path: '/mechanism2/:id',
                     component: mechanism2
                 },
                 {
-                    path: '/mechanism3',
+                    path: '/mechanism3/:id',
                     component: mechanism3
                 },
                 {
-                    path: '/mechanism4',
+                    path: '/mechanism4/:id',
                     component: mechanism4
                 },
                 {
-                    path: '/mechanism5',
+                    path: '/mechanism5/:id',
                     component: mechanism5
                 },
                 {
-                    path: '/mechanism6',
+                    path: '/mechanism6/:id',
                     component: mechanism6
+                },
+                {
+                    path: '/courseDetails/',
+                    component: courseDetails
                 },
             ], component: mechanism
         },

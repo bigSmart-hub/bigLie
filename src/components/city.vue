@@ -74,6 +74,7 @@ export default {
       this.nowposObj.name = item.name;
       this.nowposObj.id = item.id;
       this.nowposId = item.id;
+      localStorage.setItem('cityId',item.id)
       // this.nowpos = e.target.name;
       this.$root.bus.$emit("provinceName", this.nowposObj.name);
       this.$root.bus.$emit("province", this.nowposId);
@@ -101,7 +102,10 @@ export default {
 }
 #city .country > a {
   font-size: 16px;
-  color: #cccccc;
+  color: #666;
+}
+#city .el-scrollbar__wrap{
+  overflow:hidden
 }
 #city a:hover {
   color: #d12d2c;
@@ -115,16 +119,15 @@ export default {
 }
 #city li > a {
   margin-left: 16px;
-  color: #cccccc;
+  color: #666;
 }
 #city ul {
-  font-size: 16px;
-  color: #d12d2c;
-}
-#city ul {
+  width: 710px;
   display: flex;
   margin-top: 18px;
   flex-wrap: wrap;
+  font-size: 16px;
+  
 }
 #city .city_bottom {
   height: 327px;

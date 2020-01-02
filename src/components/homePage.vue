@@ -25,7 +25,7 @@ export default {
 </script>
 <style  scoped>
 #home {
-  width: 1200px;
+  /* width: 1200px; */
   margin: 0 auto;
 }
 </style>

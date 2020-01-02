@@ -35,28 +35,77 @@
           </div>
           <div class="mechanism1_type_all mechanism1_content1" v-if="isDisplay">
             <div v-for="(item,index) in mechanism1Data.all_course" :key="index">
-                <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
-                <p>{{item.title}}</p>
-                <div>
-                  <p>{{item.name}}</p>
-                  <span>￥2000</span>
-                </div>
+              <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
+              <p>{{item.title}}</p>
+              <div>
+                <p>{{item.name}}</p>
+                <span>￥2000</span>
               </div>
+            </div>
           </div>
-          <el-tabs  @tab-click="handleClick" class="tabs">
-            <el-tab-pane label="用户管理" name="first" class="mechanism1_content1">
-              <div v-for="(item,index) in 6" :key="index">
+          <el-tabs @tab-click="handleClick" class="tabs">
+            <el-tab-pane
+              :label="child.aname"
+              name="first"
+              class="mechanism1_content1"
+            >
+              <div v-for="(item,index) in child.child" :key="index">
                 <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
-                <p>小学教育小学教育</p>
+                <p>{{item.cname}}</p>
                 <div>
                   <p>自学考试</p>
                   <span>￥2000</span>
                 </div>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-            <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-            <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+            <el-tab-pane
+              :label="child1.aname"
+              name="second"
+              class="mechanism1_content1"
+            >
+              <div v-for="(item,index) in child1.child" :key="index">
+                <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
+                <p>{{item.cname}}</p>
+                <div>
+                  <p>自学考试</p>
+                  <span>￥2000</span>
+                </div>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane
+              :label="child2.aname"
+              name="third"
+              class="mechanism1_content1"
+            >
+              <div v-for="(item,index) in child2.child" :key="index">
+                <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
+                <p>{{item.cname}}</p>
+                <div>
+                  <p>自学考试</p>
+                  <span>￥2000</span>
+                </div>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane :label="child3.aname" name="fourth" class="mechanism1_content1">
+              <div v-for="(item,index) in child3.child" :key="index">
+                <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
+                <p>{{item.cname}}</p>
+                <div>
+                  <p>自学考试</p>
+                  <span>￥2000</span>
+                </div>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane :label="child4.aname" name="five" class="mechanism1_content1">
+              <div v-for="(item,index) in child4.child" :key="index">
+                <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
+                <p>{{item.cname}}</p>
+                <div>
+                  <p>自学考试</p>
+                  <span>￥2000</span>
+                </div>
+              </div>
+            </el-tab-pane>
           </el-tabs>
           <div class="more">
             <p>更多>></p>
@@ -69,8 +118,8 @@
             <p>机构实地照片</p>
           </div>
           <div class="mechanism1_pic_content">
-            <div v-for="(item,index) in 4" :key="index" class="mechanism1_pic_img">
-              <img src="../assets/矩形 12 拷贝 2@2x.png" alt />
+            <div v-for="(item,index) in mechanism1Data.work_address" :key="index" class="mechanism1_pic_img">
+              <img :src="`http://www.cepsp.com.cn/${item.img}`" alt />
             </div>
           </div>
         </div>
@@ -126,9 +175,9 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="学校动态" name="second">
-            <div v-for="(item,index) in 4" :key="index" class="mechanism1_right_second">
-              <img src="../assets/pexels-photo-716276@2x.png" alt />
-              <p>学校动态标题信息学校动态标题信息</p>
+            <div v-for="(item,index) in mechanism1Data.org_article " :key="index" class="mechanism1_right_second">
+              <img :src="`http://www.cepsp.com.cn${item.image}`" alt />
+              <p>{{item.title}}</p>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -163,17 +212,19 @@ export default {
     return {
       // activeName: "first",
       activeName1: "first",
-      isDisplay:true,
-      mechanism1Data:''
+      isDisplay: true,
+      mechanism1Data: "",
+      child:'',
+      child1:'',
+      child2:'',
+      child3:'',
+      child4:'',
     };
-  },
-  mounted() {
-    this.gteDetails()
   },
   methods: {
     // 获取机构首页
     gteDetails() {
-      fetch(`/api/organization/1/organization_index`, {
+      fetch(`/api/organization/${this.$route.params.id}/organization_index`, {
         headers: {
           "content-type": "application/json"
         },
@@ -183,26 +234,30 @@ export default {
           return data.json();
         })
         .then(res => {
-          this.mechanism1Data=res
-          console.log(res);
-          
+          this.mechanism1Data = res;
+          this.child=res.category_name[0]
+          this.child1=res.category_name[1]
+          this.child2=res.category_name[2]
+          this.child3=res.category_name[3]
+          this.child4=res.category_name[4]
         });
     },
     handleClick(tab, event) {
       console.log(tab, event);
-      this.isDisplay=false
+      this.isDisplay = false;
     }
-  }
+  },
+  mounted() {
+    this.gteDetails();
+  },
 };
 </script>
 <style>
-
-#mechanism1 .mechanism1_type_all{
+#mechanism1 .mechanism1_type_all {
   width: 860px;
   height: 480px;
   position: absolute;
   top: 80px;
-
 }
 #mechanism1 .echanism1_right_report > p {
   font-size: 12px;
@@ -353,7 +408,8 @@ export default {
 #mechanism1 .mechanism1_content1 {
   display: flex;
   flex-wrap: wrap;
-  
+  overflow: hidden;
+  height: 480px;
   padding: 0 0px 0px 20px;
 }
 #mechanism1 .mechanism1_content1 > div img {
@@ -413,7 +469,7 @@ export default {
   height: 100%;
   display: flex;
   padding: 5px 25px;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 #mechanism1 .tabs .el-tabs__item.is-active {
   color: #d12d2c;
@@ -443,6 +499,7 @@ export default {
 #mechanism1 .lunbo > div {
   width: 260px;
   height: 200px;
+  padding: 0 10px
 }
 #mechanism1 .lunbo img {
   width: 260px;

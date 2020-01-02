@@ -131,10 +131,30 @@ export default {
   data() {
     return {
       activeName: "first",
-      activeName1: "first"
+      activeName1: "first",
+      dynamicData:''
     };
   },
+  mounted() {
+    this.gteDynamic()
+  },
   methods: {
+    // 获取机构动态
+    gteDynamic() {
+      fetch(`/api/organization/${this.$route.params.id}/organization_article`, {
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "GET"
+      })
+        .then(data => {
+          return data.json();
+        })
+        .then(res => {
+          this.dynamicData=res.org_article
+          console.log(res);
+        });
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     }

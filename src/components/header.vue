@@ -42,13 +42,13 @@
               <a href="http://psp.eol.cn/servericePage5" target="blank">机构服务</a>
             </li>
             <li>
-              <a href="http://psp.eol.cn/servericePage1" target="blank">省级合作</a>
+              <a href="http://psp.eol.cn/servericePage1" target="blank">省级合作发展中心</a>
             </li>
             <li>
               <a href="http://psp.eol.cn/servericePage4" target="blank">教育机构</a>
             </li>
             <li>
-              <a href="http://psp.eol.cn/servericePage2" target="blank" >服务工具</a>
+              <a href="http://psp.eol.cn/servericePage2" target="blank">服务工具</a>
             </li>
             <li>
               <a href="http://psp.eol.cn/servericePage3" target="blank">成功案例</a>
@@ -57,10 +57,10 @@
         </li>
         <li @click="erji"></li>
         <li @click="Register(register)">
-          <a href="http://psp.eol.cn/index/user/login.html" target="blank">会员登录</a>
+          <a href="http://www.cepsp.com.cn/org_admin#/user/login" target="blank">会员登录</a>
         </li>
         <li @click="Login(login)">
-          <a href="http://psp.eol.cn/index/user/register.html" target="blank">会员注册</a>
+          <a href="http://www.cepsp.com.cn/org_admin#/user/register" target="blank">会员注册</a>
         </li>
       </ul>
     </nav>
@@ -85,7 +85,7 @@
       </div>
       <!-- logo部分 全国站-->
       <div class="heade_mid_right2" v-else>
-        <!-- <div class="logo1"></div>
+        <div class="logo1"></div>
         <div>
           <p class="text1">中国教育在线</p>
           <p class="text2">公共服务平台</p>
@@ -94,9 +94,9 @@
         <div class="logo"></div>
         <div class="text3">
           <p>推动教育资源均衡</p>
-          <p>服务全名终生学习</p>
-        </div> -->
-        <img src="../assets/组 135.png" alt="">
+          <p>服务全民终生学习</p>
+        </div>
+        <!-- <img src="../assets/组 135.png" alt /> -->
       </div>
       <!-- 搜索框部分 -->
       <div class="heade_mid_left">
@@ -274,17 +274,17 @@ nav {
   position: relative;
 }
 .erji {
-  width: 100px;
-  margin-top: 12px;
+  width: 130px;
+  margin-top: 10px;
   flex-direction: column;
-  background-color: #f6f6f6;
+  background-color: #fff;
   border: 1px solid #aeaeae;
   border-top: none;
   position: absolute;
+  border-radius: 0 0 4px 4px 
 }
 .erji > li {
-  padding: 5px 20px;
-  margin: 10px 0;
+  margin-bottom: 10px
 }
 .erji > li:hover {
   background-color: #d12d2c;
@@ -377,7 +377,7 @@ nav {
   color: #d12d2c;
 }
 .line {
-  margin: 5px 0 20px 0;
+  margin: 5px 0;
   width: 100%;
   height: 1px;
   background-color: #aeaeae;
@@ -403,7 +403,9 @@ span > a {
   margin-left: 0;
 }
 #header {
+  background-color: #fff;
   border-bottom: 2px solid #d12d2c;
+  min-width: 1200px;
 }
 a {
   height: 20px;

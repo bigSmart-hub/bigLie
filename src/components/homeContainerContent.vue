@@ -18,7 +18,10 @@
             <div id="text">
               <div v-for="(item,index) in currentData.children[0].courses" :key="index">
                 <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
-                 <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
+                  <img
+                    :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`"
+                    alt
+                  />
                   <p class="text1">{{item.title}}</p>
                 </a>
               </div>
@@ -32,25 +35,26 @@
                   <p>新闻资讯</p>
                 </div>
                 <div>
-                  <div>
-                    <p>{{currentData.children[0].articles[0]}}</p>
+                  <div v-if="currentData.children[0].articles[0]">
+                    <p
+                    >{{currentData.children[0].articles[0].title}}</p>
                     <a
-                      :href="`http://psp.eol.cn/edu/a/${currentData.children[0].articles[0]}`"
+                      :href="`http://psp.eol.cn/edu/a/${currentData.children[0].articles[0].old_id}`"
                       target="blank"
                     >
                       <img
-                        :src="`http://www.cepsp.com.cn${currentData.children[0].articles[0]}`"
+                        :src="`http://www.cepsp.com.cn${currentData.children[0].articles[0].image}`"
                         alt
                       />
                     </a>
                   </div>
-                  <div>
+                  <div v-if="currentData.children[0].articles">
                     <a
                       :href="`http://psp.eol.cn/edu/a/${item.old_id}`"
                       target="blank"
                       v-for="(item,index) in currentData.children[0].articles"
                       :key="index"
-                    >{{item}}</a>
+                    >{{item.title}}</a>
                   </div>
                 </div>
               </div>
@@ -70,7 +74,7 @@
                       :key="index"
                     >
                       <div class="recommend_orgs">
-                        <a
+                        <a 
                           :href="`http://psp.eol.cn/organization/${item.old_id}/index`"
                           v-for="(item,index) in item"
                           :key="index"
@@ -89,7 +93,10 @@
             <div id="text">
               <div v-for="(item,index) in currentData.children[1].courses" :key="index">
                 <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
-                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
+                  <img
+                    :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`"
+                    alt
+                  />
                   <p class="text1">{{item1.title}}</p>
                 </a>
               </div>
@@ -154,7 +161,10 @@
             <div id="text">
               <div v-for="(item,index) in currentData.children[2].courses" :key="index">
                 <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
-                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
+                  <img
+                    :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`"
+                    alt
+                  />
                   <p class="text1">{{item.title}}</p>
                 </a>
               </div>
@@ -219,7 +229,10 @@
             <div id="text">
               <div v-for="(item,index) in currentData.children[3].courses" :key="index">
                 <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
-                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
+                  <img
+                    :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`"
+                    alt
+                  />
                   <p class="text1">{{item.title}}</p>
                 </a>
               </div>
@@ -284,7 +297,10 @@
             <div id="text">
               <div v-for="(item,index) in currentData.children[4].courses" :key="index">
                 <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
-                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
+                  <img
+                    :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`"
+                    alt
+                  />
                   <p class="text1">{{item.title}}</p>
                 </a>
               </div>
@@ -349,7 +365,10 @@
             <div id="text">
               <div v-for="(item,index) in currentData.children[5].courses" :key="index">
                 <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
-                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
+                  <img
+                    :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`"
+                    alt
+                  />
                   <p class="text1">{{item.title}}</p>
                 </a>
               </div>
@@ -414,7 +433,10 @@
             <div id="text">
               <div v-for="(item,index) in currentData.children[6].courses" :key="index">
                 <a :href="`http://psp.eol.cn/class/${item.old_id}`" target="blank">
-                  <img :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`" alt />
+                  <img
+                    :src="`http://www.cepsp.com.cn${(item.image.length!=0||item.logo.length==0)?(item.image.length?item.image:item.logo):cdb}`"
+                    alt
+                  />
                   <p class="text1">{{item.title}}</p>
                 </a>
               </div>
@@ -565,10 +587,6 @@ export default {
             this.$root.bus.$emit("content4", arr[4]);
             this.$root.bus.$emit("content5", arr[5]);
             this.$root.bus.$emit("content6", arr[6]);
-            // this.$root.bus.$emit("content3", res[3]);
-            // this.$root.bus.$emit("content4", res[4]);
-            // this.$root.bus.$emit("content5", res[5]);
-            // this.$root.bus.$emit("content6", res[6]);
           });
       });
     },
@@ -615,9 +633,16 @@ export default {
   color: #d12d2c;
 }
 .homeContainerContent_content_img {
+  margin: 0 auto;
+  display: block;
   margin-bottom: 20px;
 }
 #homeContainerContent {
+  width: 1200px;
+  margin: 0 auto;
+  height: 563px;
+  background-color: #ffffff;
+  display: flex;
   margin-bottom: 20px;
 }
 #homeContainerContent .el-carousel__indicator--horizontal {
@@ -630,8 +655,11 @@ export default {
   width: 140px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
   margin: 0 auto;
+}
+#homeContainerContent .recommend_orgs>a{
+  padding:3px 10px
 }
 #homeContainerContent .el-carousel__button {
   height: 10px;
@@ -641,6 +669,7 @@ export default {
 }
 #homeContainerContent #text img {
   width: 209px;
+  height: 157px;
 }
 #homeContainerContent .el-carousel__arrow {
   border: none;
@@ -836,12 +865,7 @@ a {
   justify-content: space-between;
   margin-right: 26px;
 }
-#homeContainerContent {
-  width: 100%;
-  height: 563px;
-  background-color: #ffffff;
-  display: flex;
-}
+
 #homeContainerContent .titel_img {
   width: 280px;
   height: 100%;

@@ -16,16 +16,16 @@
           </li>
         </ul>
       </div>
-      <div class="mechanism_top_content">
-        <img src="../assets/timg(2).svg" alt />
+      <div class="mechanism_top_content" v-if="organizationData">
+        <img :src="`http://www.cepsp.com.cn/${organizationData.info.logo}`" alt />
         <div class="mechanism_top_content_text">
-          <p>成都琢美彩妆美甲培新学院</p>
-          <p>琢美教育以时尚艺术为名，由金牌一线教师团队定力创建，凭惜对时尚造型长期的探索和积累</p>
+          <p>{{organizationData.info.name}}</p>
+          <p>{{organizationData.description}}</p>
         </div>
         <div class="mechanism_top_content_text1">
           <img src="../assets/形状 9.png" alt />
-          <div >
-            <p>0991-4333984</p>
+          <div>
+            <p>{{organizationData.contacts_tel}}</p>
             <p>咨询时间：09:00-18:00</p>
           </div>
         </div>
@@ -39,11 +39,12 @@ export default {
   data() {
     return {
       currentSearch: "1",
+      orgId:'',
       nameArr: [
         {
           name: "机构首页",
           id: "1",
-          isCheck: true
+          isCheck: false
         },
         {
           name: "机构介绍",
@@ -70,14 +71,28 @@ export default {
           id: "6",
           isCheck: false
         }
-      ]
+      ],
+      organizationData:'',
     };
   },
-  mounted() {
-    
-  },
   methods: {
-    
+    // 获取机构信息
+    gteDetails() {
+      fetch(`/api/organization/${this.$route.params.id}/info`, {
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "GET"
+      })
+        .then(data => {
+          return data.json();
+        })
+        .then(res => {
+          this.orgId=res.id
+          this.organizationData=res  
+          console.log(res,111);  
+        });
+    },
     changes(type) {
       this.nameArr.map(item => {
         if (item.id == type.id) {
@@ -89,66 +104,73 @@ export default {
       });
       if (this.currentSearch == "1") {
         this.$router.push({
-          name: "mechanism1"
+          name: "mechanism1",
+          path:"/"+this.orgId
         });
       } else if (this.currentSearch == "2") {
         this.$router.push({
-          path: "/mechanism2/"
+          path: "/mechanism2/"+this.orgId
         });
       } else if (this.currentSearch == "3") {
         this.$router.push({
-          path: "/mechanism3/"
+          path: "/mechanism3/"+this.orgId
         });
       } else if (this.currentSearch == "4") {
         this.$router.push({
-          path: "/mechanism4/"
+          path: "/mechanism4/"+this.orgId
         });
       } else if (this.currentSearch == "5") {
         this.$router.push({
-          path: "/mechanism5/"
+          path: "/mechanism5/"+this.orgId
         });
       } else if (this.currentSearch == "6") {
         this.$router.push({
-          path: "/mechanism6/"
+          path: "/mechanism6/"+this.orgId
         });
       }
     }
-  }
+  },
+  mounted() {
+    this.gteDetails()
+  },
 };
 </script>
 <style>
 #mechanism .mechanism_top_content_text > p:nth-child(1) {
   font-size: 30px;
   color: #ffffff;
-  margin-top: 30px
+  margin-top: 30px;
 }
 #mechanism .mechanism_top_content_text > p:nth-child(2) {
   font-size: 14px;
   color: #ffffff;
+  width: 600px;
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+  white-space: nowrap; /*强制不换行*/
 }
-#mechanism .mechanism_top_content_text1  p:nth-child(1) {
+#mechanism .mechanism_top_content_text1 p:nth-child(1) {
   font-size: 30px;
   color: #ffffff;
 }
-#mechanism .mechanism_top_content_text1  p:nth-child(2) {
+#mechanism .mechanism_top_content_text1 p:nth-child(2) {
   font-size: 16px;
   color: #ffffff;
 }
-#mechanism .mechanism_top_content_text1{
-    display: flex;
-    margin-left: 200px;
-    align-items: center
+#mechanism .mechanism_top_content_text1 {
+  display: flex;
+  margin-left: 200px;
+  align-items: center;
 }
-#mechanism .mechanism_top_content_text1>img{
-    
-    height: 56px;
-    margin-right: 13px
+#mechanism .mechanism_top_content_text1 > img {
+  height: 56px;
+  margin-right: 13px;
 }
 #mechanism .mechanism_top_content {
   width: 1200px;
   margin: 0 auto;
   display: flex;
-  margin-bottom: 34px
+  margin-bottom: 34px;
 }
 #mechanism .mechanism_top_content > img {
   width: 120px;
@@ -167,6 +189,7 @@ export default {
   display: flex;
   flex-direction: column-reverse;
   position: relative;
+  min-width: 1200px;
 }
 #mechanism .mechanism_top_option {
   position: absolute;

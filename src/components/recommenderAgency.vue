@@ -6,7 +6,7 @@
     </div>
     <div>
       <div v-for="(item,index) in org_data" :key="index" class="qualityAgency_text">
-        <a :href="`http://psp.eol.cn/organization/${item.old_id}/index`">
+        <a :href="`http://psp.eol.cn/organization/${item.old_id}/index`" target="blank">
           <div class="qualityAgency_list">
             <img :src="`http://www.cepsp.com.cn/${item.logo?item.logo:cdb}`" alt />
             <div>

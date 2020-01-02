@@ -14,8 +14,8 @@
               alt
             />
             <div>
-              <p></p>
-              <p></p>
+              <p>{{item.category.name}}</p>
+              <p>{{item.category_parent.name}}</p>
             </div>
             <p>{{item.title}}</p>
           </a>
@@ -75,6 +75,8 @@ export default {
       })
       .then(res => {
         this.contents = res.slice(1, 7);
+        console.log(res,2222);
+        
       });
     fetch(`/api/index/urls`, {
       // must match 'Content-Type' header
@@ -138,6 +140,7 @@ export default {
 <style>
 #homeContainerBottom .countryHomePage7_bottom_text > li {
   list-style: none;
+  margin-top: 5px
 }
 #homeContainerBottom .countryHomePage7_bottom_text > li > a {
   font-size: 14px;
@@ -149,14 +152,14 @@ export default {
 #homeContainerBottom .countryHomePage7_bottom_text {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 0 45px 0;
+  margin: 0 0 20px 0;
 }
 #homeContainerBottom {
   width: 1200px;
-  height: 460px;
-  margin: 11px 0;
+  margin-top: 11px;
   background-color: #ffffff;
   box-sizing: border-box;
+  margin: 0 auto
 }
 #homeContainerBottom .homeContainerBottom_top {
   height: 62px;
@@ -213,7 +216,7 @@ export default {
 }
 #homeContainerBottom_mid_content {
   width: 170px;
-  height: 172px;
+  height: 200px;
  
 }
 #homeContainerBottom_mid_content div {
@@ -229,7 +232,7 @@ export default {
   font-size: 14px;
   letter-spacing: 1px;
   color: #666666;
-  width: 100px;
+  width: 180px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -237,6 +240,7 @@ export default {
 }
 #homeContainerBottom_mid_content > a > img {
   width: 170px;
+  height: 128px;
 }
 #homeContainerBottom_mid_content > a > p > span {
   margin-right: 5px;
@@ -244,6 +248,7 @@ export default {
 #homeContainerBottom .homeContainerBottom_bottom .el-tabs--top {
   width: 1142px;
   margin: 0 auto;
+  padding-top: 50px
 }
 #homeContainerBottom .el-tabs__active-bar {
   background-color: #d12d2c;

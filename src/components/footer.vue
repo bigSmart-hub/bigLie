@@ -98,7 +98,7 @@
             <div class="footer-CustomerService-item">
               <div class="CustomerService-400">
                 <div class="CustomerService-400-a">
-                  <a target="_blank" href="http://112.125.24.96:8888/fillmess/index?id=1077">在线客服</a>
+                  <a target="_blank" href="http://112.125.24.96:8888/fillmess/index?id=1077">400-718-1201</a>
                 </div>
                 <p>
                   平台在线服务
@@ -157,7 +157,9 @@ export default {};
   width: 100%;
   background: #333;
   box-sizing: border-box;
-  margin: 0 auto
+  margin: 0 auto;
+  min-width: 1200px;
+  margin-top: 20px
 }
 .footer-CustomerService {
   padding: 75px 10px;
@@ -220,7 +222,7 @@ h5 {
   padding: 0;
   color: #fff;
   text-align: center;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 400;
   font-stretch: normal;
   letter-spacing: 0;

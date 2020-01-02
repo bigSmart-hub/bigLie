@@ -46,52 +46,52 @@
         </ul>
       </div>
       <!-- 学历选择表单 -->
-      <div>
+      <div class="option">
         <ul>
           <p>推荐品牌：</p>
-          <li v-for="(item,index) in contents" :key="index">
-            <a href>
-              <img :src="item.src" alt />
-            </a>
+          <li @click="screenDataList('recommend_orgs',item)" v-for="(item,index) in recommend_orgs" :key="index">
+            <img class="logo" :src="`http://www.cepsp.com.cn/${item.logo}`" alt />
           </li>
         </ul>
         <ul>
           <p>报名地点：</p>
+          <ul>
+            <li @click="screenDataList('address',item)" v-for="(item,index) in address" :key="index">
+              <span :style="{'color': (selectionList.address === item.id ? 'red':'black')}">{{item.name}}</span>
+            </li>
+          </ul>
         </ul>
         <ul>
           <p>学历类型：</p>
-          <li>自考</li>
-          <li>成考</li>
-          <li>网教</li>
-          <li>研究生</li>
-          <li>高职</li>
-          <li>高专</li>
+          <ul>
+            <li @click="screenDataList('self_nav',item)" v-for="(item,index) in self_nav" :key="index">
+              <span :style="{'color': (selectionList.self_nav === item.value ? 'red':'black')}">{{item.name}}</span>
+            </li>
+          </ul>
         </ul>
         <ul>
           <p>学历层次：</p>
-          <li>全部</li>
-          <li>高中起点专科</li>
-          <li>专科升本科</li>
-          <li>研究生</li>
+          <ul>
+            <li @click="screenDataList('children_nav',item)" v-for="(item,index) in children_nav" :key="index">
+              <span :style="{'color': (selectionList.cat_type === item.id ? 'red':'black')}">{{item.name}}</span>
+            </li>
+          </ul>
         </ul>
         <ul>
           <p>上课时段：</p>
-          <li>不限</li>
-          <li>白天班</li>
-          <li>晚班</li>
-          <li>周末班</li>
-          <li>周六班</li>
-          <li>周日班</li>
-          <li>全日制</li>
-          <li>寒暑假</li>
-          <li>其他</li>
+          <ul>
+            <li @click="screenDataList('study_time',item)" v-for="(item,index) in study_time" :key="index">
+              <span :style="{'color': (selectionList.study_time === item.value ? 'red':'black')}">{{item.name}}</span>
+            </li>
+          </ul>
         </ul>
         <ul>
           <p>上课方式：</p>
-          <li>不限</li>
-          <li>面授</li>
-          <li>网络</li>
-          <li>面授+网络</li>
+          <ul>
+            <li @click="screenDataList('study_way',item)" v-for="(item,index) in study_way" :key="index">
+              <span :style="{'color': (selectionList.study_way === item.value ? 'red':'black')}">{{item.name}}</span>
+            </li>
+          </ul>
         </ul>
       </div>
       <div>
@@ -239,24 +239,21 @@ export default {
       },
       currentPage: "1",
       listData: [],
-      contents: [
-        {
-          src: require("@/assets/图层4.svg")
-        },
-        {
-          src: require("@/assets/图层4.svg")
-        },
-        {
-          src: require("@/assets/图层4.svg")
-        },
-        {
-          src: require("@/assets/图层4.svg")
-        },
-        {
-          src: require("@/assets/图层4.svg")
-        }
-      ],
-
+      recommend_orgs:[],
+      address:[],
+      study_time:[],
+      study_way:[],
+      self_nav:[],
+      children_nav:[],
+      selectionList:{
+        selection:'',
+        address:'',
+        recommend_orgs:'',
+        cat_type:'',
+        study_time:'',
+        self_nav:'',
+        study_way:''
+      },
       sizeForm: {
         name: "",
         region: "",
@@ -280,6 +277,7 @@ export default {
   mounted() {
     this.commonProblem();
     this.searchListData("1");
+    this.getOptionData()
   },
   methods: {
     handleSizeChange(val) {
@@ -287,6 +285,90 @@ export default {
     },
     handleCurrentChange(val) {
       this.searchListData(val);
+    },
+    screenDataList(name,item){
+      let that = this
+      let selectionList = this.selectionList
+      let params = ''
+      switch(name){
+        //上课方式
+        case 'study_way':
+          that.selectionList.study_way = item.value
+          break;
+        //地址
+        case 'address':
+          that.selectionList.address = item.id
+          break;
+        //推荐品牌
+        case 'recommend_orgs':
+          // that.selectionList.recommend_orgs = item.id
+          break;
+        //学历层次
+        case 'children_nav':
+          that.selectionList.cat_type = item.id || ''
+          break;
+        //上课时段
+        case 'study_time':
+          that.selectionList.study_time = item.value
+          break;
+        case 'self_nav':
+          //不管
+          // that.selectionList.self_nav = item.name
+          break;
+      }
+      for (const key in selectionList) {
+        if (selectionList.hasOwnProperty(key)) {
+          if(selectionList[key]){
+            params += `&${key}=${selectionList[key]}`
+          }
+        }
+      }
+      
+      //更新数据
+      try {
+        console.log(params,1111);
+        
+        fetch(
+        `/api/courses/1?${params}`,{
+          headers: {
+            "content-type": " application/json",
+          },
+          method: "GET"
+        }
+      ).then(res => res.json())
+        .then(res => {
+          console.log(res, 6666666);
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    //得到选项数据
+    getOptionData(){
+      let cityId = localStorage.getItem('cityId')
+      try {
+        // /courses/{category_id}
+        fetch(
+        `/api/courses/nav/1`,{
+          headers: {
+            "content-type": "application/json",
+            "province": `${cityId}`
+          },
+          method: "GET"
+        }
+      ).then(res => res.json())
+        .then(res => {
+          this.recommend_orgs = res.recommend_orgs
+          this.address = res.address
+          this.study_time = res.study_time
+          this.study_way = res.study_way
+          this.self_nav = res.category_nav.self_nav
+          this.children_nav = res.category_nav.children_nav
+          console.log(res, 333333333333);
+        })
+      } catch (error) {
+        console.log(error)
+      }
     },
     searchListData(page) {
       fetch(
@@ -660,5 +742,19 @@ width: 200px;
 #searchList .searchList_right {
   width: 240px;
   margin-top: 60px;
+}
+.logo{
+  width: 50px;
+  height: 50px;
+}
+.option>ul{
+  display: flex;
+  align-items: flex-start;
+}
+.option>ul>ul{
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 </style>

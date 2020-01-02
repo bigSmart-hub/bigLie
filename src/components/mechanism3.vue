@@ -5,31 +5,108 @@
       <!-- 左边区域 -->
       <div class="mechanism1_left">
         <!-- 全部课程详细 -->
-        <div class="mechanism1_type">
+        <div class="mechanism1_type" v-if="courseData&&ccid">
           <el-tabs v-model="activeName" @tab-click="handleClick" class="tabs">
-            <el-tab-pane label="全部课程" name="first" class="mechanism1_content1">
-              <div v-for="(item,index) in 18" :key="index">
-                <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
-                <p>小学教育小学教育</p>
-                <div>
-                  <p>自学考试</p>
-                  <span class="span">￥2000</span>
+            <el-tab-pane label="全部课程" name="first">
+              <div class="mechanism1_content1">
+                <div v-for="(item,index) in courseData.data" :key="index">
+                  <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
+                  <p>{{item.title}}</p>
+                  <div>
+                    <p>{{item.name}}</p>
+                    <span class="span">￥{{item.price}}</span>
+                  </div>
                 </div>
               </div>
               <div class="block">
                 <el-pagination
-                  :current-page="currentPage4"
-                  :page-sizes="[100, 200, 300, 400]"
-                  :page-size="100"
+                  :current-page="courseData.current_page"
+                  :page-size="courseData.per_page"
                   layout="  prev, pager, next, jumper"
-                  :total="400"
+                  :total="courseData.total"
                 ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="课程分类" name="second">配置管理</el-tab-pane>
-            <el-tab-pane label="课程分类" name="third">角色管理</el-tab-pane>
-            <el-tab-pane label="课程分类" name="fourth">定时任务补偿</el-tab-pane>
-            <el-tab-pane label="课程分类" name="five">定时任务补偿</el-tab-pane>
+            <el-tab-pane :label="ccid[0].aname" name="second">
+              <div class="mechanism1_content1" v-if="courseData1">
+                <div v-for="(item,index) in courseData1.data" :key="index">
+                  <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
+                  <p>{{item.title}}</p>
+                  <div>
+                    <p>{{item.name}}</p>
+                    <span class="span">￥{{item.price}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="block">
+                <el-pagination
+                  :current-page="courseData1.current_page"
+                  :page-size="courseData1.per_page"
+                  layout="  prev, pager, next, jumper"
+                  :total="courseData1.total"
+                ></el-pagination>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane :label="ccid[1].aname" name="third">
+               <div class="mechanism1_content1" v-if="courseData1">
+                <div v-for="(item,index) in courseData1.data" :key="index">
+                  <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
+                  <p>{{item.title}}</p>
+                  <div>
+                    <p>{{item.name}}</p>
+                    <span class="span">￥{{item.price}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="block">
+                <el-pagination
+                  :current-page="courseData1.current_page"
+                  :page-size="courseData1.per_page"
+                  layout="  prev, pager, next, jumper"
+                  :total="courseData1.total"
+                ></el-pagination>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane :label="ccid[2].aname" name="fourth">
+                  <div class="mechanism1_content1" v-if="courseData1">
+                <div v-for="(item,index) in courseData1.data" :key="index">
+                  <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
+                  <p>{{item.title}}</p>
+                  <div>
+                    <p>{{item.name}}</p>
+                    <span class="span">￥{{item.price}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="block">
+                <el-pagination
+                  :current-page="courseData1.current_page"
+                  :page-size="courseData1.per_page"
+                  layout="  prev, pager, next, jumper"
+                  :total="courseData1.total"
+                ></el-pagination>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane :label="ccid[3].aname" name="five">
+                  <div class="mechanism1_content1" v-if="courseData1">
+                <div v-for="(item,index) in courseData1.data" :key="index">
+                  <img src="../assets/c37349954c1362ae001ca9445234035a26737ab8.svg" alt />
+                  <p>{{item.title}}</p>
+                  <div>
+                    <p>{{item.name}}</p>
+                    <span class="span">￥{{item.price}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="block">
+                <el-pagination
+                  :current-page="courseData1.current_page"
+                  :page-size="courseData1.per_page"
+                  layout="  prev, pager, next, jumper"
+                  :total="courseData1.total"
+                ></el-pagination>
+              </div>
+            </el-tab-pane>
           </el-tabs>
         </div>
       </div>
@@ -114,22 +191,81 @@ export default {
     return {
       activeName: "first",
       activeName1: "first",
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4
+      courseData: "",
+      ccid: "",
+      courseData1:''
     };
   },
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
+    // 获取本机构全部课程
+    gteAllCourse() {
+      fetch(`/api/organization/${this.$route.params.id}/all_course`, {
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "GET"
+      })
+        .then(data => {
+          return data.json();
+        })
+        .then(res => {
+          this.courseData = res;
+          console.log(res);
+        });
+    },
+    // 获取机构课程分类id
+    gteCourseCategory() {
+      fetch(`/api/organization/${this.$route.params.id}/organization_index`, {
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "GET"
+      })
+        .then(data => {
+          return data.json();
+        })
+        .then(res => {
+          this.ccid = res.category_name;
+          console.log(res);
+        });
+    },
+    // 请求选项卡数据
+    handleClick(node) {
+      console.log(this.ccid[node.index - 1]);
+      console.log(this.$route.params.id);
+      
+      if (node.index - 1 >= 0) {
+        let a={
+         organization_id: this.$route.params.id,
+         category_id: this.ccid[node.index - 1].id
+      }
+        fetch(`/api/organization/course_category`, {
+          headers: {
+            "content-type": "application/json",
+            "Accept":"application/json"
+          },
+          method: "POST",
+          body: JSON.stringify(a)
+        })
+          .then(data => {
+            return data.json();
+          })
+          .then(res => {
+           this.courseData1=res
+           console.log(res);
+           
+          });
+      }
     }
   },
+  mounted() {
+    this.gteAllCourse(), this.gteCourseCategory();
+  }
 };
 </script>
 <style>
 #mechanism3 .block {
-  margin: 0 auto;
+  text-align: center;
 }
 #mechanism3 .titel {
   height: 60px;
@@ -158,10 +294,13 @@ export default {
 #mechanism3 .mechanism1_type .el-tabs__nav {
   margin-left: 25px;
 }
+#mechanism3 .mechanism1_content1>div{
+  padding: 0 10px
+}
 #mechanism3 .mechanism1_content1 {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 0 20px 0px 20px;
 }
 #mechanism3 .mechanism1_content1 > div img {

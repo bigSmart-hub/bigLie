@@ -39,7 +39,7 @@
               class="educationalServices2_list_mid_text"
               v-for="(item,index) in logos"
               :key="index"
-            >
+            ><a :href="`http://psp.eol.cn/organization/${item.old_id}/index`" target="blank">
               <div class="educationalServices2_list_mid_text_left">
                 <div>
                   <img
@@ -52,7 +52,6 @@
                   <p>{{item.name}}</p>
                   <img src="../assets/84a550ffc60b1e042cd585e9d33ec05.svg" alt />
                   <img src="../assets/a3689b6dade3695708c07746a0631bf.svg" alt />
-                  <img src="../assets/e810f360d92f26b30f8787ad4559494.svg" alt />
                   <p>{{item.contacts_tel}}</p>
                   <p>地址：{{item.address}}</p>
                 </div>
@@ -60,12 +59,19 @@
                   <button>咨询机构</button>
                 </div>
               </div>
+              </a>
             </div>
           </div>
           <div class="educationalServices2_list_bottom"></div>
         </div>
         <!-- 分页器 -->
-        <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+        <el-pagination background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="listData.current_page"
+          :page-size="15"
+          layout="prev, pager, next, jumper"
+          :total="listData.total"></el-pagination>
       </div>
       <!-- 右边内容 -->
       <div class="educationalServices2_container_right">
@@ -97,11 +103,19 @@ export default {
     };
   },
   watch: {
-    $route(to, from) {
-      console.log(to.path, from,45678);
+    $route() {
+      if (this.$route.params.name) {
+        this.searchListData("1");
+      }
     }
   },
   methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.searchListData(val);
+    },
     //排序0
     searchListData0(page) {
       fetch(
@@ -165,7 +179,6 @@ export default {
       )
         .then(res => res.json())
         .then(res => {
-          console.log(res);
           this.listData = res.list;
           this.logos = res.list.data;
           this.currentaddress = res.address;
@@ -315,10 +328,10 @@ export default {
 }
 #educationalServices2 .region {
   width: 940px;
-  height: 506px;
   background-color: #ffffff;
   border-radius: 4px;
   margin: 0 auto;
+  padding-bottom: 20px
 }
 #educationalServices2 .titel {
   height: 60px;

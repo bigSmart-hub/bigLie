@@ -349,7 +349,7 @@ export default {
 }
 #educationalServices .region {
   width: 1200px;
-  height: 506px;
+  padding-bottom: 20px;
   background-color: #ffffff;
   border-radius: 4px;
   margin: 0 auto;
@@ -394,6 +394,7 @@ export default {
   height: 400px;
   background-image: url("../assets/蓝色渐变背景.svg");
   background-position: center;
+  min-width: 1200px;
 }
 #educationalServices .excellentLnstitutions {
   width: 1200px;
